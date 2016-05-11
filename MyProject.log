@@ -1,0 +1,58 @@
+0	1	mBAVR.exe -MSF -DBG -pATMEGA8 -Y -DL -SSA -O11111114 -fo4 -BOOTSZ1024 -BOOTOP2 -N"H:\atmega 8 led dancing\MyProject.mbpav" -SP"C:\Program Files\Mikroelektronika\mikroBasic PRO for AVR\defs\" -SP"C:\Program Files\Mikroelektronika\mikroBasic PRO for AVR\uses\lte64kw\" -SP"H:\atmega 8 led dancing\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for AVR\defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for AVR\uses\lte64kw\" -SP"E:\microc_test\atmega 8 led dancing\" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_String.mcl" "__Lib_CStdlib.mcl" "__Lib_MemManager.mcl" "__Lib_Conversions.mcl" "__Lib_Time.mcl" "__Lib_Trigon.mcl" "__Lib_Trigonometry.mcl" "__Lib_Button.mcl" "__Lib_Keypad4x4.mcl" "__Lib_Manchester.mcl" "__Lib_OneWire.mcl" "__Lib_PS2.mcl" "__Lib_Sound.mcl" "__Lib_SoftI2C.mcl" "__Lib_SoftSPI.mcl" "__Lib_SoftUART.mcl" "__Lib_ADC.mcl" "__Lib_EEPROM_eew.mcl" "__Lib_FLASH_rwe.mcl" "__Lib_PWM1_2_presc.mcl" "__Lib_PWM16bit_12.mcl" "__Lib_SPI_b5432_x2.mcl" "__Lib_TWI.mcl" "__Lib_UART_d01_ursel.mcl" "__Lib_PortExpander.mcl" "__Lib_CANSPI.mcl" "__Lib_CF.mcl" "__Lib_GlcdFonts.mcl" "__Lib_Glcd.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl" "__Lib_Mmc.mcl" "__Lib_RS485.mcl" "__Lib_S1D13700.mcl" "__Lib_T6963C.mcl" "__Lib_T6963C_Consts.mcl" "__Lib_SPIGlcd.mcl" "__Lib_SPILcd.mcl" "__Lib_SPILcd8.mcl" "__Lib_SPIT6963C.mcl" "__Lib_SPIT6963C_Const.mcl" "__Lib_TouchPanel.mcl" "MyProject.mbas"	 
+warning: 0	1501	Specified search path does not exist: 'C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for AVR\defs'	 
+warning: 0	1501	Specified search path does not exist: 'C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for AVR\uses\lte64kw'	 
+warning: 0	1501	Specified search path does not exist: 'E:\microc_test\atmega 8 led dancing'	 
+diagnostics: 0	133	Compilation Started	H:\atmega 8 led dancing\MyProject.mbas
+hint: 1	1015	Hint: Compiling unit "H:\atmega 8 led dancing\MyProject.mbas"	MyProject.mbas
+warning: 128	1509	Warning: Implicit typecast performed from "longint" to "float"	MyProject.mbas
+warning: 128	1509	Warning: Implicit typecast performed from "byte" to "float"	MyProject.mbas
+warning: 128	1509	Warning: Implicit typecast performed from "integer" to "double"	MyProject.mbas
+warning: 128	1509	Warning: Implicit typecast performed from "integer" to "double"	MyProject.mbas
+warning: 128	1509	Warning: Implicit typecast performed from "double" to "integer"	MyProject.mbas
+warning: 140	1509	Warning: Implicit typecast performed from "longint" to "double"	MyProject.mbas
+warning: 141	1516	Warning: Source size (4) does not match destination size (23)	MyProject.mbas
+warning: 160	1509	Warning: Implicit typecast performed from "longint" to "double"	MyProject.mbas
+warning: 161	1516	Warning: Source size (4) does not match destination size (23)	MyProject.mbas
+hint: 862	1021	Hint: interrupt handler (interrupt_ISR at 0x0001)	MyProject.mbas
+warning: 871	1509	Warning: Implicit typecast performed from "double" to "byte"	MyProject.mbas
+warning: 874	1509	Warning: Implicit typecast performed from "double" to "byte"	MyProject.mbas
+hint: 915	1021	Hint: interrupt handler (Timer0Overflow_ISR at 0x0009)	MyProject.mbas
+hint: 44	1001	Hint: Variable "btm" has been declared, but not used	MyProject.mbas
+hint: 209	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 237	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 265	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 283	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 317	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 340	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 365	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 395	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 419	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 442	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 465	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 489	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 513	1001	Hint: Variable "dl" has been declared, but not used	MyProject.mbas
+hint: 538	1001	Hint: Variable "ocr0" has been declared, but not used	MyProject.mbas
+hint: 538	1001	Hint: Variable "ocr2" has been declared, but not used	MyProject.mbas
+hint: 538	1001	Hint: Variable "k" has been declared, but not used	MyProject.mbas
+hint: 583	1001	Hint: Variable "J" has been declared, but not used	MyProject.mbas
+warning: 77	1520	variable 'localword' might not have been initialized	MyProject.mbas
+hint: 47	1011	Hint: Variable "mult" has been eliminated by optimizer	MyProject.mbas
+hint: 48	1011	Hint: Variable "div2" has been eliminated by optimizer	MyProject.mbas
+hint: 104	1011	Hint: Variable "tempCh" has been eliminated by optimizer	MyProject.mbas
+hint: 137	1011	Hint: Variable "ii" has been eliminated by optimizer	MyProject.mbas
+hint: 138	1011	Hint: Variable "jjyear" has been eliminated by optimizer	MyProject.mbas
+hint: 158	1011	Hint: Variable "jjyear" has been eliminated by optimizer	MyProject.mbas
+hint: 538	1011	Hint: Variable "ocr0" has been eliminated by optimizer	MyProject.mbas
+hint: 538	1011	Hint: Variable "ocr2" has been eliminated by optimizer	MyProject.mbas
+hint: 538	1011	Hint: Variable "k" has been eliminated by optimizer	MyProject.mbas
+hint: 918	1011	Hint: Variable "counter" has been eliminated by optimizer	MyProject.mbas
+hint: 982	1010	Hint: Unit "MyProject.mbas" has been recompiled	MyProject.mbas
+diagnostics: 0	134	Compiled Successfully	H:\atmega 8 led dancing\MyProject.mbas
+diagnostics: 0	139	All files Compiled in 281 ms	 
+hint: 0	1144	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)	Used RX (bytes): 32 (100%)   Free RX (bytes): 0 (0%)
+hint: 0	1144	Static RAM (bytes): 20   Dynamic RAM (bytes): 1004	Static RAM (bytes): 20   Dynamic RAM (bytes): 1004
+hint: 0	1144	Used ROM (bytes): 7406 (90%)  Free ROM (bytes): 786 (10%)	Used ROM (bytes): 7406 (90%)  Free ROM (bytes): 786 (10%)
+diagnostics: 0	145	Project Linked Successfully	MyProject.mbpav
+diagnostics: 0	140	Linked in 672 ms	 
+diagnostics: 0	141	Project 'MyProject.mbpav' completed: 1062 ms	 
+diagnostics: 0	103	Finished successfully: 20 Nov 2015, 23:36:47	MyProject.mbpav

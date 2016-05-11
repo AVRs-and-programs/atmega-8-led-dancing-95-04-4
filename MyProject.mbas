@@ -1,0 +1,982 @@
+program MyProject
+
+dim LCD_RS as sbit  at PORTC5_bit
+''Lcdpin = Pin , Db4 = Pinc.3 , Db5 = Pinc.2 , Db6 = Pinc.1 , Db7 = Pinc.0 , Rs = Pinc.5 , E = Pinc.4
+dim LCD_EN as sbit  at PORTC4_bit
+dim LCD_D4 as sbit  at PORTC3_bit
+dim LCD_D5 as sbit  at PORTC2_bit
+dim LCD_D6 as sbit  at PORTC1_bit
+dim LCD_D7 as sbit  at PORTC0_bit
+
+dim LCD_RS_Direction as sbit at DDC5_bit
+dim LCD_EN_Direction as sbit at DDC4_bit
+dim LCD_D4_Direction as sbit at DDC3_bit
+dim LCD_D5_Direction as sbit at DDC2_bit
+dim LCD_D6_Direction as sbit at DDC1_bit
+dim LCD_D7_Direction as sbit at DDC0_bit
+
+' Declarations section 
+ dim st as string[4]
+ dim txt as string[6]
+ dim output as integer
+    i,mode    as integer
+    p as INTEGER
+    J as INTEGER
+    K,kk,dl2 AS INTEGER
+    vare1 as INTEGER
+    oldstate_3 as bit
+dim RANDOM as byte'
+
+
+'sub procedure DO_RANDOM
+'    asm
+'      RLF     MAIN_GLOBAL_RANDOM,W
+'      RLF     MAIN_GLOBAL_RANDOM,W
+'      BTFSC   MAIN_GLOBAL_RANDOM,4
+'      XORLW   1
+'      BTFSC   MAIN_GLOBAL_RANDOM,5
+'      XORLW   1
+'      BTFSC   MAIN_GLOBAL_RANDOM,3
+'      XORLW   1
+'      MOVWF   MAIN_GLOBAL_RANDOM
+'    end asm
+'end sub
+sub function RndBig(dim btm as word, dim top as word) as word
+  dim localword as word
+
+  dim mult as byte
+   dim div2 as word
+
+  ' btm and top = range the random needs to fall within
+
+  ' setup a multiplier if we need a random bigger than 32767
+  ' setup a divisor to reduce the size of the random if small numbers are needed
+  ' tried it without the divisor as well, it still works but spends a lot more time in the loop calling rand()
+  if top > 32767 then
+    div2 = 65535 / (top + 1)
+    mult = 2
+  else
+    div2 = 32767 / (top + 1)
+    mult = 1
+  end if
+
+  ' seed the RNG
+'  sRand(TMR1L * TMR1H)
+'  GIE = 0 ' Disable interrupts to prevent lockup
+'  do ' loop until we get a random that meets the upper bound criteria
+'    localword = (rand() * mult) / div
+'  loop until (localword <= top)
+'  GIE = 1 ' Interrupts back on now
+'
+'  if (localword <= btm) then
+'    localword = btm ' If the random is too small, return the lower bound criteria
+'  end if
+'
+'  sevenseg(localword) ' routine that prints out the random one byte at a time using soft_uart
+
+  result = localword
+end sub
+
+ sub procedure Lcd_0()
+              Lcd_Init()
+              Lcd_Cmd(_LCD_CLEAR)               ' Clear display
+              Lcd_Cmd(_LCD_CURSOR_OFF)          ' Cursor off
+
+end sub
+' ######################################################################################################################################
+sub procedure Move_Delay()            ' Function used for text moving
+  select case mode
+  case 1
+  Delay_ms(4)                       ' You can change the moving speed here
+  case 2
+  Delay_ms(30)                       ' You can change the moving speed here
+  case 3
+  Delay_ms(50)                       ' You can change the moving speed here
+  case 4
+  Delay_ms(1)                       ' You can change the moving speed here
+  end select
+end sub
+'#############################################################  PROGRAM1   ##########################################################################
+
+
+sub procedure strToInt1()
+  dim stringLength,temp,numberLength,j,ex , i as integer
+      tempCh as char
+      output = 0  ex=0
+      i = 1  stringLength = strlen(st)  temp = 0   numberLength = 0
+
+  for j = 0 to stringLength-1
+'   inc(j)
+   tempCh = st[j]
+   temp = tempCh - 48
+   if   tempCh =46 then
+      ex=1
+   end if
+       if (temp >= 0) and ( temp <= 9) and (ex=0)  then
+
+                 inc(numberLength)
+       end if
+   next j
+
+
+   for j = 0 to numberLength-1
+'     inc(j)
+     tempCh = st[j]
+     temp = tempCh - 48
+     if (temp >= 0) and (temp <= 9)  then
+
+        output =output +  temp * pow(10, (numberLength-i))
+        i=i+1
+
+     end if
+   next j
+
+end sub
+
+ sub procedure PWM_MAKE_as_max(dim jj as integer,dim max_duty as integer)
+ dim  ii as integer
+      jjyear as float
+'        jjyear=jj
+      jjyear=ceil((jj*max_duty)/100)
+      FloatToStr(jjyear, st)
+'      st[3]=(jjyear div 1000)  + 48
+'       st[2]=((jjyear mod 1000)div 100)  + 48
+'       st[1]= (((jjyear mod 1000)mod 100) div 10)  + 48
+'       st[0]= ((((jjyear mod 1000)mod 100) mod 10) div 1) + 48
+       Lcd_0()
+'         ii = StrToInt(st)
+         strToInt1()
+         ii =output
+         IntToStr(ii, txt)
+     Lcd_Out(1,1,st)
+     Lcd_Out(2,1,txt)
+     Delay_mS(1000)
+  end sub
+ sub procedure PWM_MAKE(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'      dim st as string[4]
+      dim  ii as integer
+        jjyear as float
+'        jjyear=jj
+      jjyear=ceil((jj*max_duty)/100)
+      FloatToStr(jjyear, st)
+'      st[3]=(jjyear div 1000)  + 48
+'       st[2]=((jjyear mod 1000)div 100)  + 48
+'       st[1]= (((jjyear mod 1000)mod 100) div 10)  + 48
+'       st[0]= ((((jjyear mod 1000)mod 100) mod 10) div 1) + 48
+'       Lcd_0()
+'         ii = StrToInt(st)
+         strToInt1()
+         ii =output
+         IntToStr(ii, txt)
+     Lcd_Out(1,1,st)
+     Lcd_Out(2,6,txt)
+     IntToStr(jj, txt)
+     Lcd_Out(2,1,txt)
+
+'     Delay_mS(100)
+     select case Pwm_chanel
+     case 1
+'     jj=floor((jj*1024)/100)
+'           PWM_MAKE_as_max(jj,1024) ii=output
+          PWM16bit_Change_Duty(ii, _TIMER1_CH_A )
+     case 2
+           Lcd_0()
+'          jj=ceil((jj*1024)/100)
+          PWM16bit_Change_Duty( ii, _TIMER1_CH_B )
+     case 3
+'     PWM_MAKE_as_max(jj,512) ii=output
+'     jj=floor((jj*255)/100)
+          PWM2_Set_Duty(ii)
+'     case 4
+'     PWM_MAKE_as_max(jj,512) ii=output
+'     jj=floor((jj*255)/100)
+'          PWM2_Set_Duty(ii)
+'     case 5
+'     PWM_MAKE_as_max(jj,512) ii=output
+'     jj=floor((jj*255)/100)
+'          PWM16bit_Change_Duty(ii, _TIMER1_CH_A )
+'     case 6
+'     PWM_MAKE_as_max(jj,512) ii=output
+'     jj=floor((jj*255)/100)
+'          PWM16bit_Change_Duty(ii, _TIMER3_CH_B )
+'     case 7
+'     PWM_MAKE_as_max(jj,512) ii=output
+'     jj=floor((jj*255)/100)
+'          PWM16bit_Change_Duty(ii, _TIMER3_CH_C )
+     end select
+ end sub
+'#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM1 (DIM J,dl AS integer)
+'const dl2
+  Lcd_0()
+' P=J
+' for p=0 to 100      ' ???? 8 ????
+  do
+
+'    delay_ms (dl)
+'    Delay_ms(2)
+     Move_Delay()
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     PWM2_Set_Duty(j)
+     inc(J)
+
+     lcd_out(1,1," _TIMER1_CH_A ")
+     inttostr(j,txt)
+          lcd_out(2,5,txt)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+  '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM2 (DIM J,dl AS integer)
+' P=J
+' for p=0 to 100      ' ???? 8 ????
+ Lcd_0()
+  do
+
+'    delay_ms (dl)
+     Move_Delay()
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     PWM2_Set_Duty(j)
+
+     lcd_out(1,1," _TIMER1_CH_A ")
+     inttostr(j,txt)
+          lcd_out(2,5,txt)
+     Dec(J)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=0
+end sub
+' ######################################################################################################################################
+
+' ######################################################    PROGRAM3    ################################################################################
+sub procedure PROGRAM3 (DIM J,dl AS integer)
+
+
+     PWM16bit_Change_Duty( j, _TIMER1_CH_A )
+     PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+'     PWM1_Set_Duty(j)      ''a channal
+     PWM2_Set_Duty(150)    ''b channal
+     Lcd_0()
+     lcd_out(1,1," _TIMER1_CH_A ")
+     inttostr(j,txt)
+          lcd_out(2,5,txt)
+          lcd_out(1,1,"Pwm2 ")
+     inttostr(150,txt)
+          lcd_out(2,5,txt )
+
+end sub
+ ' ######################################################################################################################################
+'#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM4 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+   Lcd_0()
+  do
+
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+     PWM2_Set_Duty(j)
+     lcd_out(1,1,"TIMER1_CH_A ")
+     inttostr(j,txt)
+          lcd_out(1,11,txt)
+     inttostr(p,txt)
+     lcd_out(2,1,"TIMER1_CH_B ")
+          lcd_out(2,11,txt)
+          lcd_out(1,1,"Pwm2 ")
+     inttostr(150,txt)
+          lcd_out(2,5,txt )
+     inc(J)
+    dec(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+ '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM5 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (10)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     PWM2_Set_Duty(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+ '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM6 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+     PWM2_Set_Duty(j)
+     J=j+3 p=p-3
+'     inc(J)
+'     dec(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+
+ sub procedure PROGRAM7 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+'    PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+     PWM2_Set_Duty(j)
+'     delay_ms (dl)
+     Move_Delay()
+     PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
+     
+    PWM16bit_Change_Duty( p*0, _TIMER1_CH_B )
+     PWM2_Set_Duty(j*0)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+ '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM8 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     PWM2_Set_Duty(0)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+
+   '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM9 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     PWM2_Set_Duty(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+   '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM10 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+     PWM2_Set_Duty(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+   '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM11 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+    inc(J)
+    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+     PWM2_Set_Duty(p)
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+' ######################################################################################################################################
+
+   '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM12 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+'    inc(J)
+'    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+     PWM2_Set_Duty(1)
+     J=j+1
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+
+   '#############################################################  PROGRAM1   ##########################################################################
+sub procedure PROGRAM13 (DIM J,dl AS integer)
+ P=J
+' for p=0 to 100      ' ???? 8 ????
+  p=255-j
+  do
+'    inc(J)
+'    dec(p)
+    Move_Delay()
+'    delay_ms (dl)
+'    Delay_ms(2)
+    PWM16bit_Change_Duty(30, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( 10, _TIMER1_CH_B )
+     PWM2_Set_Duty(100)
+     J=j+3
+'    PWM2_Set_Duty(j)
+'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'   next p
+
+  loop until J>=255
+end sub
+
+sub procedure PWM_Initialize ()
+dim j as integer
+   ocr0,ocr2, k as integer
+J=0
+
+'    txt5 = "PROGRAM5"
+'    txt6 = "WWW.ELASA.IR"
+'    DDD2_bit = 1
+    DDb1_bit = 1                    ' set portd pin0 as output pin for ufa fountain
+    DDb2_bit = 1                    ' Set PORTB pin 3 as output pin for the PWM (according to datasheet)
+    DDb3_bit = 1                    ' Set PORTD pin 7 as output pin for the PWM1 (according to datasheet)
+    'DDD4_bit = 1                      'Set PORTD pin 4 as output pin for the PWM1 (according to datasheet oc1a)
+    'DDD5_bit = 1                      'Set PORTD pin 5 as output pin for the PWM1 (according to datasheet oc1b)
+
+'    PWM1_Init(_PWM1_FAST_MODE, _PWM1_PRESCALER_8, _PWM1_NON_INVERTED,J)
+    PWM2_Init(_PWM2_FAST_MODE, _PWM2_PRESCALER_8, _PWM2_NON_INVERTED, J)
+    PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
+'    PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
+'    PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
+'    PWM1_Set_Duty(j)
+    PWM2_Set_Duty(j)
+'    PWM3_Set_Duty(j)   ' Se
+'    ocr0=0 ocr2=0
+'    for k=0 to 5
+'        PWM_MAKE (k*20,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'        delay_ms(200)
+'    next k
+end sub
+
+
+' ########################################################  LOOP   1   ##############################################################################
+sub procedure LOOP1 (DIM J AS integer)
+K=0
+' J= 0
+ do
+   inc(K)
+    J= K*10
+    PROGRAM1(J,k)
+    ''delay_ms(2000)
+'    PROGRAM2(j)
+    J=100
+    PROGRAM3(J,k)
+    delay_ms(2000)
+   loop until K = 10
+end sub
+' ######################################################################################################################################
+
+sub procedure LOOP11 (DIM J AS integer)
+K=150
+     kk=255 -k
+'     dl2=100
+'     const dl2=100
+     do
+'     PROGRAM1(k,dl2)
+     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+     PROGRAM4(k,dl2)
+     PROGRAM10(K,dl2)
+     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+     PROGRAM7(K,dl2)
+     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+'        PROGRAM12(K,dl2)
+        PROGRAM13(K,dl2)
+      K=K+3
+      kk=kk - 3
+'      inc(K)
+'      dec(kk)
+'
+'      LOOP1(k)
+       if mode<>1 then
+          break
+       end if
+
+      loop until K >= 255
+      K=170
+     kk=255-k
+      do
+'     PROGRAM1(k,dl2)
+     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+     if mode<>1 then
+          break
+       end if
+
+      loop until K >= 255
+      K=190
+     kk=255-k
+      do
+'     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+      K=K+10
+      kk=kk - 10
+      if mode<>1 then
+          break
+       end if
+
+      loop until K >= 255
+      K=180
+     kk=255-180
+      do
+     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+     if mode<>1 then
+          break
+       end if
+      loop until K >= 255
+
+     end sub
+
+sub procedure loop22(dim k2 as integer)
+K=k2
+'                  K=0
+     kk=255 -k
+'     dl2=100
+'     const dl2=100
+     do
+'     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+        PROGRAM12(K,dl2)
+'        PROGRAM13(K,dl2)
+      K=K+3
+      kk=kk - 3
+'      inc(K)
+'      dec(kk)
+'
+'      LOOP1(k)
+       if mode<>2 then
+          break
+       end if
+      loop until K >= 255
+      K=170
+     kk=255-170
+      do
+      if mode<>2 then
+         break
+      end if
+'     PROGRAM1(k,dl2)
+     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+'
+      loop until K >= 255
+      K=190
+     kk=255-190
+      do
+      if mode<>2 then
+         break
+      end if
+'
+'     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+      K=K+10
+      kk=kk - 10
+      loop until K >= 255
+      K=180
+     kk=255-180
+      do
+      if mode<>2 then
+         break
+      end if
+'
+     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+'
+      loop until K >= 255
+      
+      end sub
+
+
+sub procedure loop33(dim k2 as integer)
+K=k2
+'                  K=0
+     kk=255
+'     dl2=100
+'     const dl2=100
+     do
+'     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+        PROGRAM12(K,dl2)
+'        PROGRAM13(K,dl2)
+      K=K+3
+      kk=kk - 3
+'      inc(K)
+'      dec(kk)
+'
+'      LOOP1(k)
+       if mode<>2 then
+          break
+       end if
+      loop until K >= 255
+      K=170
+     kk=255-170
+      do
+      if mode<>3 then
+         break
+      end if
+'     PROGRAM1(k,dl2)
+     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+'
+      loop until K >= 255
+      K=190
+     kk=255-k
+      do
+      if mode<>3 then
+         break
+      end if
+'
+'     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+'     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+'     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+'     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+'     PROGRAM8(K,dl2)
+      PROGRAM11(K,dl2)
+      K=K+10
+      kk=kk - 10
+      loop until K >= 255
+      K=180
+     kk=255-k
+      do
+      if mode<>3 then
+         break
+      end if
+'
+     PROGRAM1(k,dl2)
+'     PROGRAM9(K,dl2)
+     PROGRAM2(kk,dl2)
+'     PROGRAM4(k,dl2)
+     PROGRAM10(K,dl2)
+'     PROGRAM5(k,dl2)
+     PROGRAM6(k,dl2)
+'     PROGRAM7(K,dl2)
+     PROGRAM8(K,dl2)
+'      PROGRAM11(K,dl2)
+      K=K+1
+      kk=kk - 1
+'
+      loop until K >= 255
+
+      end sub
+
+
+sub procedure interrupt_ISR () org IVT_ADDR_INT0            ''// Interrupt rutine
+'dim while_satate_in_1 as bit
+
+  SREG_I_bit = 0                                   '' // Disable Interrupts
+
+'   WDT_on()
+  INTF0_bit=0                                                  '  // Clear interrupt flag
+  INT0_bit = 0
+  oldstate_3=0
+    if (Button(PORTD, 2, 0.1, 0)) then    ' Detect logical one up key
+            oldstate_3 = 1                      ' Update flag
+    end if
+    if (oldstate_3 and Button(PIND, 2,0.1, 1)) then
+          if (mode=4) then
+              mode=1
+          else
+             mode=mode+1
+          end if
+          select case mode
+          case 1
+          Lcd_0()
+          inttostr(mode,txt)
+          LCD_Out(2,9, txt)  ''Show on LCD
+          LCD_Out(1,1, "Mode : Dancing")  ''Show on LCD
+          Delay_mS(100)
+          case 2
+          Lcd_0()
+          inttostr(mode,txt)
+          LCD_Out(2,9, txt)  ''Show on LCD
+          LCD_Out(1,1, "Mode : Clasic")  ''Show on LCD
+          Delay_mS(100)
+          case 3
+          Lcd_0()
+          inttostr(mode,txt)
+          LCD_Out(2,9, txt)  ''Show on LCD
+          LCD_Out(1,1, "Mode : warm")  ''Show on LCD
+          Delay_mS(100)
+
+          case 4
+          Lcd_0()
+          inttostr(mode,txt)
+          LCD_Out(2,9, txt)  ''Show on LCD
+          LCD_Out(1,1, "Mode : echolazier")  ''Show on LCD
+          Delay_mS(100)
+
+          end select
+
+    end if
+    INT0_bit = 1
+'  LCD_Out(1,1, "ënd of keypad3")   Delay_mS(1000)
+   SREG_I_bit = 1
+
+end sub
+sub procedure Timer0Overflow_ISR org IVT_ADDR_TIMER0_OVF
+
+const _THRESHOLD = 20
+dim counter as byte
+'
+'  if (counter >= _THRESHOLD) then
+   'PORTB = not PORTB        ' toggle PORTB
+'    counter = 0              ' reset counter
+'    else
+'      Inc(counter)           ' increment counter
+'  end if
+WHILE TRUE
+counter=counter+1
+PORTB= 0X00
+WEND
+end sub
+
+' #
+main:
+     Lcd_Init()
+     Lcd_Cmd(_LCD_CLEAR)               ' Clear display
+     Lcd_Cmd(_LCD_CURSOR_OFF)
+     Lcd_Out(1,1,"Waiting For ")
+     Lcd_Out(2,1,"To Be Pressed")
+     PWM_Initialize ()
+      DDD2_bit = 0                                        ' set Button pin as input
+ ' ##########   Interupt enalbleing   ##########
+   ISC00_bit = 1                                    '' // Set interrupts to be detected on rising edge
+'   ISC00_bit = 1
+   SREG_I_bit = 0
+'    Delay_ms(500)                                  ''  // Enable Interrupts
+   SREG_I_bit = 1
+
+   INT0_bit = 1
+
+'#########################################
+                 mode=1
+
+'      SREG_I_bit = 1             ' Interrupt enable
+'      TOIE0_bit  = 1             ' Timer0 overflow interrupt enable _ register: timsk (page 178 - avr book)
+'      TCCR0  = 5                 ' Start timer with 1024 prescaler (page 177-avrbook)
+'      tcnt0=100
+     while TRUE
+'      PWM_MAKE (50,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (50,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PWM_MAKE (50,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
+'     PROGRAM1(0)
+'     PROGRAM2(100)
+      select case   mode
+      case 1
+      K=0
+      Lcd_0()
+      LOOP11(k)
+      case 2  ''######## warm
+      Lcd_0()
+      loop22(K)
+      case 3
+      Lcd_0()
+        loop33(K)
+      case 4
+      Lcd_0()
+      PROGRAM8(0,dl2)
+      case else
+        PROGRAM8(0,dl2)
+      end select
+     wend
+'   Main program 
+end.
