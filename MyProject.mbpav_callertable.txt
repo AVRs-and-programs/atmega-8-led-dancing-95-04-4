@@ -13,72 +13,79 @@ main
 	PWM_Initialize
 		PWM2_Init
 		PWM16bit_Init
-		PWM2_Set_Duty
+		SetPWM0
 	Lcd_0
 		Lcd_Init
 		Lcd_Cmd
 	LOOP11
-		PROGRAM9
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM2
-			Lcd_0
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-			Lcd_Out
-			IntToStr
-				Div_16x16_S
-		PROGRAM4
-			Lcd_0
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-			Lcd_Out
-			IntToStr
-		PROGRAM10
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM5
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM6
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM7
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM8
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM11
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
-		PROGRAM13
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
 		PROGRAM1
 			Lcd_0
 			Move_Delay
 			PWM16bit_Change_Duty
-			PWM2_Set_Duty
+			SetPWM0
 			Lcd_Out
 			IntToStr
+				Div_16x16_S
+		PROGRAM2
+			Lcd_0
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+			Lcd_Out
+			IntToStr
+		PROGRAM3
+			PWM16bit_Change_Duty
+			SetPWM0
+			Lcd_0
+			Lcd_Out
+			IntToStr
+		PROGRAM4
+			Lcd_0
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+			Lcd_Out
+			IntToStr
+		PROGRAM5
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM6
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM7
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM8
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM9
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM10
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM11
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM12
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
+		PROGRAM13
+			Move_Delay
+			PWM16bit_Change_Duty
+			SetPWM0
 	loop22
 		PROGRAM2
 		PROGRAM6
 		PROGRAM12
-			Move_Delay
-			PWM16bit_Change_Duty
-			PWM2_Set_Duty
 		PROGRAM9
 		PROGRAM11
 		PROGRAM1

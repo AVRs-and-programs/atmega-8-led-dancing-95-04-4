@@ -15,9 +15,9 @@ _RndBig:
 	LDI        R17, 127
 	CP         R16, R4
 	CPC        R17, R5
-	BRLO       L__RndBig299
+	BRLO       L__RndBig278
 	JMP        L__RndBig2
-L__RndBig299:
+L__RndBig278:
 ;MyProject.mbas,57 :: 		mult = 2
 	JMP        L__RndBig3
 ;MyProject.mbas,58 :: 		else
@@ -63,94 +63,26 @@ L_end_Lcd_0:
 _Move_Delay:
 
 ;MyProject.mbas,87 :: 		sub procedure Move_Delay()            ' Function used for text moving
-;MyProject.mbas,89 :: 		case 1
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__Move_Delay302
-	CPI        R16, 1
-L__Move_Delay302:
-	BREQ       L__Move_Delay303
-	JMP        L__Move_Delay9
-L__Move_Delay303:
-;MyProject.mbas,90 :: 		Delay_ms(4)                       ' You can change the moving speed here
-	LDI        R17, 21
-	LDI        R16, 199
+;MyProject.mbas,88 :: 		mode=1
+	LDI        R27, 1
+	STS        _mode+0, R27
+	LDI        R27, 0
+	STS        _mode+1, R27
+;MyProject.mbas,91 :: 		Delay_ms(200)                       ' You can change the moving speed here
+	LDI        R18, 9
+	LDI        R17, 30
+	LDI        R16, 229
 L__Move_Delay10:
 	DEC        R16
 	BRNE       L__Move_Delay10
 	DEC        R17
 	BRNE       L__Move_Delay10
-	JMP        L__Move_Delay6
-L__Move_Delay9:
-;MyProject.mbas,91 :: 		case 2
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__Move_Delay304
-	CPI        R16, 2
-L__Move_Delay304:
-	BREQ       L__Move_Delay305
-	JMP        L__Move_Delay14
-L__Move_Delay305:
-;MyProject.mbas,92 :: 		Delay_ms(30)                       ' You can change the moving speed here
-	LDI        R17, 156
-	LDI        R16, 215
-L__Move_Delay15:
-	DEC        R16
-	BRNE       L__Move_Delay15
-	DEC        R17
-	BRNE       L__Move_Delay15
-	NOP
-	NOP
-	JMP        L__Move_Delay6
-L__Move_Delay14:
-;MyProject.mbas,93 :: 		case 3
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__Move_Delay306
-	CPI        R16, 3
-L__Move_Delay306:
-	BREQ       L__Move_Delay307
-	JMP        L__Move_Delay19
-L__Move_Delay307:
-;MyProject.mbas,94 :: 		Delay_ms(50)                       ' You can change the moving speed here
-	LDI        R18, 2
-	LDI        R17, 4
-	LDI        R16, 187
-L__Move_Delay20:
-	DEC        R16
-	BRNE       L__Move_Delay20
-	DEC        R17
-	BRNE       L__Move_Delay20
 	DEC        R18
-	BRNE       L__Move_Delay20
+	BRNE       L__Move_Delay10
 	NOP
-	JMP        L__Move_Delay6
-L__Move_Delay19:
-;MyProject.mbas,95 :: 		case 4
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__Move_Delay308
-	CPI        R16, 4
-L__Move_Delay308:
-	BREQ       L__Move_Delay309
-	JMP        L__Move_Delay24
-L__Move_Delay309:
-;MyProject.mbas,96 :: 		Delay_ms(1)                       ' You can change the moving speed here
-	LDI        R17, 6
-	LDI        R16, 49
-L__Move_Delay25:
-	DEC        R16
-	BRNE       L__Move_Delay25
-	DEC        R17
-	BRNE       L__Move_Delay25
-	JMP        L__Move_Delay6
-L__Move_Delay24:
+;MyProject.mbas,97 :: 		Delay_ms(100)                       ' You can change the moving speed here
 L__Move_Delay6:
-;MyProject.mbas,98 :: 		end sub
+;MyProject.mbas,99 :: 		end sub
 L_end_Move_Delay:
 	RET
 ; end of _Move_Delay
@@ -165,8 +97,8 @@ _strToInt1:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,104 :: 		tempCh as char
-;MyProject.mbas,105 :: 		output = 0  ex=0
+;MyProject.mbas,105 :: 		tempCh as char
+;MyProject.mbas,106 :: 		output = 0  ex=0
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -181,7 +113,7 @@ _strToInt1:
 	LDI        R27, 0
 	STD        Y+6, R27
 	STD        Y+7, R27
-;MyProject.mbas,106 :: 		i = 1  stringLength = strlen(st)  temp = 0   numberLength = 0
+;MyProject.mbas,107 :: 		i = 1  stringLength = strlen(st)  temp = 0   numberLength = 0
 	LDI        R27, 1
 	STD        Y+8, R27
 	LDI        R27, 0
@@ -197,7 +129,7 @@ _strToInt1:
 	LDI        R27, 0
 	STD        Y+2, R27
 	STD        Y+3, R27
-;MyProject.mbas,108 :: 		for j = 0 to stringLength-1
+;MyProject.mbas,109 :: 		for j = 0 to stringLength-1
 	LDI        R27, 0
 	STD        Y+4, R27
 	STD        Y+5, R27
@@ -212,10 +144,10 @@ L__strToInt128:
 	LDD        R17, Y+5
 	CP         R21, R16
 	CPC        R22, R17
-	BRGE       L__strToInt1311
+	BRGE       L__strToInt1282
 	JMP        L__strToInt132
-L__strToInt1311:
-;MyProject.mbas,110 :: 		tempCh = st[j]
+L__strToInt1282:
+;MyProject.mbas,111 :: 		tempCh = st[j]
 	LDI        R18, #lo_addr(_st+0)
 	LDI        R19, hi_addr(_st+0)
 	LDD        R16, Y+4
@@ -224,25 +156,25 @@ L__strToInt1311:
 	ADD        R30, R18
 	ADC        R31, R19
 	LD         R18, Z
-;MyProject.mbas,111 :: 		temp = tempCh - 48
+;MyProject.mbas,112 :: 		temp = tempCh - 48
 	MOV        R16, R18
 	LDI        R17, 0
 	SUBI       R16, 48
 	SBCI       R17, 0
 	STD        Y+0, R16
 	STD        Y+1, R17
-;MyProject.mbas,112 :: 		if   tempCh =46 then
+;MyProject.mbas,113 :: 		if   tempCh =46 then
 	CPI        R18, 46
-	BREQ       L__strToInt1312
+	BREQ       L__strToInt1283
 	JMP        L__strToInt134
-L__strToInt1312:
-;MyProject.mbas,113 :: 		ex=1
+L__strToInt1283:
+;MyProject.mbas,114 :: 		ex=1
 	LDI        R27, 1
 	STD        Y+6, R27
 	LDI        R27, 0
 	STD        Y+7, R27
 L__strToInt134:
-;MyProject.mbas,115 :: 		if (temp >= 0) and ( temp <= 9) and (ex=0)  then
+;MyProject.mbas,116 :: 		if (temp >= 0) and ( temp <= 9) and (ex=0)  then
 	LDD        R19, Y+0
 	LDD        R20, Y+1
 	LDI        R16, 0
@@ -250,35 +182,35 @@ L__strToInt134:
 	CP         R19, R16
 	CPC        R20, R17
 	LDI        R18, 0
-	BRLT       L__strToInt1313
+	BRLT       L__strToInt1284
 	LDI        R18, 255
-L__strToInt1313:
+L__strToInt1284:
 	LDI        R16, 9
 	LDI        R17, 0
 	CP         R16, R19
 	CPC        R17, R20
 	LDI        R27, 0
-	BRLT       L__strToInt1314
+	BRLT       L__strToInt1285
 	LDI        R27, 255
-L__strToInt1314:
+L__strToInt1285:
 	MOV        R16, R27
 	AND        R18, R16
 	LDD        R16, Y+6
 	LDD        R17, Y+7
 	CPI        R17, 0
-	BRNE       L__strToInt1315
+	BRNE       L__strToInt1286
 	CPI        R16, 0
-L__strToInt1315:
+L__strToInt1286:
 	LDI        R27, 0
-	BRNE       L__strToInt1316
+	BRNE       L__strToInt1287
 	LDI        R27, 255
-L__strToInt1316:
+L__strToInt1287:
 	MOV        R16, R27
 	AND        R16, R18
-	BRNE       L__strToInt1317
+	BRNE       L__strToInt1288
 	JMP        L__strToInt137
-L__strToInt1317:
-;MyProject.mbas,117 :: 		inc(numberLength)
+L__strToInt1288:
+;MyProject.mbas,118 :: 		inc(numberLength)
 	LDD        R16, Y+2
 	LDD        R17, Y+3
 	SUBI       R16, 255
@@ -286,14 +218,14 @@ L__strToInt1317:
 	STD        Y+2, R16
 	STD        Y+3, R17
 L__strToInt137:
-;MyProject.mbas,119 :: 		next j
+;MyProject.mbas,120 :: 		next j
 	LDD        R16, Y+4
 	LDD        R17, Y+5
 	CP         R16, R21
 	CPC        R17, R22
-	BRNE       L__strToInt1318
+	BRNE       L__strToInt1289
 	JMP        L__strToInt132
-L__strToInt1318:
+L__strToInt1289:
 	LDD        R16, Y+4
 	LDD        R17, Y+5
 	SUBI       R16, 255
@@ -303,7 +235,7 @@ L__strToInt1318:
 ; stringLength end address is: 25 (R25)
 	JMP        L__strToInt128
 L__strToInt132:
-;MyProject.mbas,122 :: 		for j = 0 to numberLength-1
+;MyProject.mbas,123 :: 		for j = 0 to numberLength-1
 	LDI        R27, 0
 	STD        Y+4, R27
 	STD        Y+5, R27
@@ -318,10 +250,10 @@ L__strToInt139:
 	LDD        R17, Y+5
 	CP         R18, R16
 	CPC        R19, R17
-	BRGE       L__strToInt1319
+	BRGE       L__strToInt1290
 	JMP        L__strToInt143
-L__strToInt1319:
-;MyProject.mbas,124 :: 		tempCh = st[j]
+L__strToInt1290:
+;MyProject.mbas,125 :: 		tempCh = st[j]
 	LDI        R18, #lo_addr(_st+0)
 	LDI        R19, hi_addr(_st+0)
 	LDD        R16, Y+4
@@ -330,36 +262,36 @@ L__strToInt1319:
 	ADD        R30, R18
 	ADC        R31, R19
 	LD         R16, Z
-;MyProject.mbas,125 :: 		temp = tempCh - 48
+;MyProject.mbas,126 :: 		temp = tempCh - 48
 	MOV        R19, R16
 	LDI        R20, 0
 	SUBI       R19, 48
 	SBCI       R20, 0
 	STD        Y+0, R19
 	STD        Y+1, R20
-;MyProject.mbas,126 :: 		if (temp >= 0) and (temp <= 9)  then
+;MyProject.mbas,127 :: 		if (temp >= 0) and (temp <= 9)  then
 	LDI        R16, 0
 	LDI        R17, 0
 	CP         R19, R16
 	CPC        R20, R17
 	LDI        R18, 0
-	BRLT       L__strToInt1320
+	BRLT       L__strToInt1291
 	LDI        R18, 255
-L__strToInt1320:
+L__strToInt1291:
 	LDI        R16, 9
 	LDI        R17, 0
 	CP         R16, R19
 	CPC        R17, R20
 	LDI        R27, 0
-	BRLT       L__strToInt1321
+	BRLT       L__strToInt1292
 	LDI        R27, 255
-L__strToInt1321:
+L__strToInt1292:
 	MOV        R16, R27
 	AND        R16, R18
-	BRNE       L__strToInt1322
+	BRNE       L__strToInt1293
 	JMP        L__strToInt145
-L__strToInt1322:
-;MyProject.mbas,128 :: 		output =output +  temp * pow(10, (numberLength-i))
+L__strToInt1293:
+;MyProject.mbas,129 :: 		output =output +  temp * pow(10, (numberLength-i))
 	LDD        R0, Y+8
 	LDD        R1, Y+9
 	LDI        R27, 0
@@ -421,7 +353,7 @@ L__strToInt1322:
 	CALL       _float_fpint+0
 	STS        _output+0, R16
 	STS        _output+1, R17
-;MyProject.mbas,129 :: 		i=i+1
+;MyProject.mbas,130 :: 		i=i+1
 	LDD        R16, Y+8
 	LDD        R17, Y+9
 	SUBI       R16, 255
@@ -429,16 +361,16 @@ L__strToInt1322:
 	STD        Y+8, R16
 	STD        Y+9, R17
 L__strToInt145:
-;MyProject.mbas,132 :: 		next j
+;MyProject.mbas,133 :: 		next j
 	LDD        R18, Y+4
 	LDD        R19, Y+5
 	LDD        R16, Y+26
 	LDD        R17, Y+27
 	CP         R18, R16
 	CPC        R19, R17
-	BRNE       L__strToInt1323
+	BRNE       L__strToInt1294
 	JMP        L__strToInt143
-L__strToInt1323:
+L__strToInt1294:
 	LDD        R16, Y+4
 	LDD        R17, Y+5
 	SUBI       R16, 255
@@ -447,7 +379,7 @@ L__strToInt1323:
 	STD        Y+5, R17
 	JMP        L__strToInt139
 L__strToInt143:
-;MyProject.mbas,134 :: 		end sub
+;MyProject.mbas,135 :: 		end sub
 L_end_strToInt1:
 	POP        R9
 	POP        R8
@@ -467,8 +399,8 @@ L_end_strToInt1:
 
 _PWM_MAKE_as_max:
 
-;MyProject.mbas,138 :: 		jjyear as float
-;MyProject.mbas,140 :: 		jjyear=ceil((jj*max_duty)/100)
+;MyProject.mbas,139 :: 		jjyear as float
+;MyProject.mbas,141 :: 		jjyear=ceil((jj*max_duty)/100)
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -495,7 +427,7 @@ _PWM_MAKE_as_max:
 	MOVW       R2, R16
 	MOVW       R4, R18
 	CALL       _ceil+0
-;MyProject.mbas,141 :: 		FloatToStr(jjyear, st)
+;MyProject.mbas,142 :: 		FloatToStr(jjyear, st)
 	LDI        R27, #lo_addr(_st+0)
 	MOV        R6, R27
 	LDI        R27, hi_addr(_st+0)
@@ -503,11 +435,11 @@ _PWM_MAKE_as_max:
 	MOVW       R2, R16
 	MOVW       R4, R18
 	CALL       _FloatToStr+0
-;MyProject.mbas,146 :: 		Lcd_0()
+;MyProject.mbas,147 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,148 :: 		strToInt1()
+;MyProject.mbas,149 :: 		strToInt1()
 	CALL       _strToInt1+0
-;MyProject.mbas,150 :: 		IntToStr(ii, txt)
+;MyProject.mbas,151 :: 		IntToStr(ii, txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -515,7 +447,7 @@ _PWM_MAKE_as_max:
 	LDS        R2, _output+0
 	LDS        R3, _output+1
 	CALL       _IntToStr+0
-;MyProject.mbas,151 :: 		Lcd_Out(1,1,st)
+;MyProject.mbas,152 :: 		Lcd_Out(1,1,st)
 	LDI        R27, #lo_addr(_st+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_st+0)
@@ -525,7 +457,7 @@ _PWM_MAKE_as_max:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,152 :: 		Lcd_Out(2,1,txt)
+;MyProject.mbas,153 :: 		Lcd_Out(2,1,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -535,10 +467,10 @@ _PWM_MAKE_as_max:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,153 :: 		Delay_mS(1000)
-	LDI        R18, 21
-	LDI        R17, 75
-	LDI        R16, 191
+;MyProject.mbas,154 :: 		Delay_mS(1000)
+	LDI        R18, 41
+	LDI        R17, 150
+	LDI        R16, 128
 L__PWM_MAKE_as_max48:
 	DEC        R16
 	BRNE       L__PWM_MAKE_as_max48
@@ -546,8 +478,7 @@ L__PWM_MAKE_as_max48:
 	BRNE       L__PWM_MAKE_as_max48
 	DEC        R18
 	BRNE       L__PWM_MAKE_as_max48
-	NOP
-;MyProject.mbas,154 :: 		end sub
+;MyProject.mbas,155 :: 		end sub
 L_end_PWM_MAKE_as_max:
 	POP        R7
 	POP        R6
@@ -568,8 +499,8 @@ _PWM_MAKE:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,158 :: 		jjyear as float
-;MyProject.mbas,160 :: 		jjyear=ceil((jj*max_duty)/100)
+;MyProject.mbas,159 :: 		jjyear as float
+;MyProject.mbas,161 :: 		jjyear=ceil((jj*max_duty)/100)
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -598,7 +529,7 @@ _PWM_MAKE:
 	MOVW       R2, R16
 	MOVW       R4, R18
 	CALL       _ceil+0
-;MyProject.mbas,161 :: 		FloatToStr(jjyear, st)
+;MyProject.mbas,162 :: 		FloatToStr(jjyear, st)
 	LDI        R27, #lo_addr(_st+0)
 	MOV        R6, R27
 	LDI        R27, hi_addr(_st+0)
@@ -606,14 +537,14 @@ _PWM_MAKE:
 	MOVW       R2, R16
 	MOVW       R4, R18
 	CALL       _FloatToStr+0
-;MyProject.mbas,168 :: 		strToInt1()
+;MyProject.mbas,169 :: 		strToInt1()
 	CALL       _strToInt1+0
-;MyProject.mbas,169 :: 		ii =output
+;MyProject.mbas,170 :: 		ii =output
 	LDS        R16, _output+0
 	LDS        R17, _output+1
 	STD        Y+0, R16
 	STD        Y+1, R17
-;MyProject.mbas,170 :: 		IntToStr(ii, txt)
+;MyProject.mbas,171 :: 		IntToStr(ii, txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -621,7 +552,7 @@ _PWM_MAKE:
 	LDS        R2, _output+0
 	LDS        R3, _output+1
 	CALL       _IntToStr+0
-;MyProject.mbas,171 :: 		Lcd_Out(1,1,st)
+;MyProject.mbas,172 :: 		Lcd_Out(1,1,st)
 	LDI        R27, #lo_addr(_st+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_st+0)
@@ -631,7 +562,7 @@ _PWM_MAKE:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,172 :: 		Lcd_Out(2,6,txt)
+;MyProject.mbas,173 :: 		Lcd_Out(2,6,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -643,13 +574,13 @@ _PWM_MAKE:
 	CALL       _Lcd_Out+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,173 :: 		IntToStr(jj, txt)
+;MyProject.mbas,174 :: 		IntToStr(jj, txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
 	MOV        R5, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,174 :: 		Lcd_Out(2,1,txt)
+;MyProject.mbas,175 :: 		Lcd_Out(2,1,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -661,17 +592,17 @@ _PWM_MAKE:
 	CALL       _Lcd_Out+0
 	POP        R6
 	POP        R7
-;MyProject.mbas,178 :: 		case 1
+;MyProject.mbas,179 :: 		case 1
 	LDI        R27, 0
 	CP         R7, R27
-	BRNE       L__PWM_MAKE326
+	BRNE       L__PWM_MAKE297
 	LDI        R27, 1
 	CP         R6, R27
-L__PWM_MAKE326:
-	BREQ       L__PWM_MAKE327
+L__PWM_MAKE297:
+	BREQ       L__PWM_MAKE298
 	JMP        L__PWM_MAKE54
-L__PWM_MAKE327:
-;MyProject.mbas,181 :: 		PWM16bit_Change_Duty(ii, _TIMER1_CH_A )
+L__PWM_MAKE298:
+;MyProject.mbas,182 :: 		PWM16bit_Change_Duty(ii, _TIMER1_CH_A )
 	LDI        R27, 17
 	MOV        R4, R27
 	LDD        R2, Y+0
@@ -679,19 +610,19 @@ L__PWM_MAKE327:
 	CALL       _PWM16bit_Change_Duty+0
 	JMP        L__PWM_MAKE51
 L__PWM_MAKE54:
-;MyProject.mbas,182 :: 		case 2
+;MyProject.mbas,183 :: 		case 2
 	LDI        R27, 0
 	CP         R7, R27
-	BRNE       L__PWM_MAKE328
+	BRNE       L__PWM_MAKE299
 	LDI        R27, 2
 	CP         R6, R27
-L__PWM_MAKE328:
-	BREQ       L__PWM_MAKE329
+L__PWM_MAKE299:
+	BREQ       L__PWM_MAKE300
 	JMP        L__PWM_MAKE57
-L__PWM_MAKE329:
-;MyProject.mbas,183 :: 		Lcd_0()
+L__PWM_MAKE300:
+;MyProject.mbas,184 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,185 :: 		PWM16bit_Change_Duty( ii, _TIMER1_CH_B )
+;MyProject.mbas,186 :: 		PWM16bit_Change_Duty( ii, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	LDD        R2, Y+0
@@ -699,23 +630,23 @@ L__PWM_MAKE329:
 	CALL       _PWM16bit_Change_Duty+0
 	JMP        L__PWM_MAKE51
 L__PWM_MAKE57:
-;MyProject.mbas,186 :: 		case 3
+;MyProject.mbas,187 :: 		case 3
 	LDI        R27, 0
 	CP         R7, R27
-	BRNE       L__PWM_MAKE330
+	BRNE       L__PWM_MAKE301
 	LDI        R27, 3
 	CP         R6, R27
-L__PWM_MAKE330:
-	BREQ       L__PWM_MAKE331
+L__PWM_MAKE301:
+	BREQ       L__PWM_MAKE302
 	JMP        L__PWM_MAKE60
-L__PWM_MAKE331:
-;MyProject.mbas,189 :: 		PWM2_Set_Duty(ii)
+L__PWM_MAKE302:
+;MyProject.mbas,190 :: 		PWM2_Set_Duty(ii)
 	LDD        R2, Y+0
 	CALL       _PWM2_Set_Duty+0
 	JMP        L__PWM_MAKE51
 L__PWM_MAKE60:
 L__PWM_MAKE51:
-;MyProject.mbas,207 :: 		end sub
+;MyProject.mbas,193 :: 		end sub
 L_end_PWM_MAKE:
 	POP        R5
 	POP        R4
@@ -729,6 +660,16 @@ L_end_PWM_MAKE:
 	RET
 ; end of _PWM_MAKE
 
+_SetPWM0:
+
+;MyProject.mbas,194 :: 		sub procedure SetPWM0(dim duty as integer)
+;MyProject.mbas,197 :: 		OCR2=duty
+	OUT        OCR2+0, R2
+;MyProject.mbas,198 :: 		end sub
+L_end_SetPWM0:
+	RET
+; end of _SetPWM0
+
 _PROGRAM1:
 	PUSH       R28
 	PUSH       R29
@@ -739,37 +680,50 @@ _PROGRAM1:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,209 :: 		sub procedure PROGRAM1 (DIM J,dl AS integer)
-;MyProject.mbas,211 :: 		Lcd_0()
+;MyProject.mbas,200 :: 		sub procedure PROGRAM1 (DIM J,dl AS integer)
+;MyProject.mbas,202 :: 		Lcd_0()
 	PUSH       R3
 	PUSH       R2
 	CALL       _Lcd_0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,214 :: 		do
-L__PROGRAM162:
-;MyProject.mbas,218 :: 		Move_Delay()
+;MyProject.mbas,206 :: 		do
+L__PROGRAM163:
+;MyProject.mbas,210 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,219 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+;MyProject.mbas,211 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	LDI        R27, 17
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,220 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+;MyProject.mbas,212 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_B )
+	PUSH       R3
+	PUSH       R2
 	LDI        R27, 18
 	MOV        R4, R27
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
+	POP        R2
+	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,221 :: 		PWM2_Set_Duty(j)
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,222 :: 		inc(J)
+;MyProject.mbas,213 :: 		SetPWM0(-1)
+	PUSH       R3
+	PUSH       R2
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
+	POP        R2
+	POP        R3
+;MyProject.mbas,214 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,224 :: 		lcd_out(1,1," _TIMER1_CH_A ")
+;MyProject.mbas,216 :: 		lcd_out(1,1," _TIMER1_CH_A ")
 	MOVW       R30, R28
 	LDI        R27, 32
 	ST         Z+, R27
@@ -814,7 +768,7 @@ L__PROGRAM162:
 	CALL       _Lcd_Out+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,225 :: 		inttostr(j,txt)
+;MyProject.mbas,217 :: 		inttostr(j,txt)
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, #lo_addr(_txt+0)
@@ -822,7 +776,7 @@ L__PROGRAM162:
 	LDI        R27, hi_addr(_txt+0)
 	MOV        R5, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,226 :: 		lcd_out(2,5,txt)
+;MyProject.mbas,218 :: 		lcd_out(2,5,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -836,17 +790,17 @@ L__PROGRAM162:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,233 :: 		loop until J>=255
+;MyProject.mbas,225 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM1333
-	JMP        L__PROGRAM165
-L__PROGRAM1333:
-	JMP        L__PROGRAM162
-L__PROGRAM165:
-;MyProject.mbas,234 :: 		end sub
+	BRLT       L__PROGRAM1305
+	JMP        L__PROGRAM166
+L__PROGRAM1305:
+	JMP        L__PROGRAM163
+L__PROGRAM166:
+;MyProject.mbas,226 :: 		end sub
 L_end_PROGRAM1:
 	ADIW       R28, 14
 	OUT        SPL+0, R28
@@ -866,32 +820,45 @@ _PROGRAM2:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,237 :: 		sub procedure PROGRAM2 (DIM J,dl AS integer)
-;MyProject.mbas,240 :: 		Lcd_0()
+;MyProject.mbas,229 :: 		sub procedure PROGRAM2 (DIM J,dl AS integer)
+;MyProject.mbas,232 :: 		Lcd_0()
 	PUSH       R3
 	PUSH       R2
 	CALL       _Lcd_0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,241 :: 		do
-L__PROGRAM268:
-;MyProject.mbas,244 :: 		Move_Delay()
+;MyProject.mbas,233 :: 		do
+L__PROGRAM269:
+;MyProject.mbas,236 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,246 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+;MyProject.mbas,238 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
+	PUSH       R3
+	PUSH       R2
 	LDI        R27, 17
 	MOV        R4, R27
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,247 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+	POP        R2
+	POP        R3
+;MyProject.mbas,239 :: 		PWM16bit_Change_Duty(J, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R4
 	POP        R5
-;MyProject.mbas,248 :: 		PWM2_Set_Duty(j)
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,250 :: 		lcd_out(1,1," _TIMER1_CH_A ")
+;MyProject.mbas,240 :: 		SetPWM0(-1)
+	PUSH       R3
+	PUSH       R2
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
+	POP        R2
+	POP        R3
+;MyProject.mbas,242 :: 		lcd_out(1,1," _TIMER1_CH_B ")
 	MOVW       R30, R28
 	LDI        R27, 32
 	ST         Z+, R27
@@ -917,7 +884,7 @@ L__PROGRAM268:
 	ST         Z+, R27
 	LDI        R27, 95
 	ST         Z+, R27
-	LDI        R27, 65
+	LDI        R27, 66
 	ST         Z+, R27
 	LDI        R27, 32
 	ST         Z+, R27
@@ -936,7 +903,7 @@ L__PROGRAM268:
 	CALL       _Lcd_Out+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,251 :: 		inttostr(j,txt)
+;MyProject.mbas,243 :: 		inttostr(j,txt)
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, #lo_addr(_txt+0)
@@ -944,7 +911,7 @@ L__PROGRAM268:
 	LDI        R27, hi_addr(_txt+0)
 	MOV        R5, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,252 :: 		lcd_out(2,5,txt)
+;MyProject.mbas,244 :: 		lcd_out(2,5,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -958,22 +925,22 @@ L__PROGRAM268:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,253 :: 		Dec(J)
+;MyProject.mbas,245 :: 		inc(J)
 	MOVW       R18, R2
-	SUBI       R18, 1
-	SBCI       R19, 0
+	SUBI       R18, 255
+	SBCI       R19, 255
 	MOVW       R2, R18
-;MyProject.mbas,260 :: 		loop until J>=0
-	LDI        R16, 0
+;MyProject.mbas,246 :: 		loop until J>=255
+	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__PROGRAM2335
-	JMP        L__PROGRAM271
-L__PROGRAM2335:
-	JMP        L__PROGRAM268
-L__PROGRAM271:
-;MyProject.mbas,261 :: 		end sub
+	BRLT       L__PROGRAM2307
+	JMP        L__PROGRAM272
+L__PROGRAM2307:
+	JMP        L__PROGRAM269
+L__PROGRAM272:
+;MyProject.mbas,247 :: 		end sub
 L_end_PROGRAM2:
 	ADIW       R28, 14
 	OUT        SPL+0, R28
@@ -993,28 +960,38 @@ _PROGRAM3:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,265 :: 		sub procedure PROGRAM3 (DIM J,dl AS integer)
-;MyProject.mbas,268 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_A )
-	PUSH       R2
-	PUSH       R3
-	PUSH       R4
+;MyProject.mbas,251 :: 		sub procedure PROGRAM3 (DIM J,dl AS integer)
+;MyProject.mbas,253 :: 		do
+L__PROGRAM375:
+;MyProject.mbas,254 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_A )
 	PUSH       R5
+	PUSH       R4
+	PUSH       R3
+	PUSH       R2
 	LDI        R27, 17
 	MOV        R4, R27
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,269 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+;MyProject.mbas,255 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,271 :: 		PWM2_Set_Duty(150)    ''b channal
+	POP        R2
+	POP        R3
+	POP        R4
+	POP        R5
+;MyProject.mbas,257 :: 		SetPWM0(j)    ''b channal
+	CALL       _SetPWM0+0
+;MyProject.mbas,258 :: 		Lcd_0()
+	PUSH       R5
+	PUSH       R4
 	PUSH       R3
 	PUSH       R2
-	LDI        R27, 150
-	MOV        R2, R27
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,272 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,273 :: 		lcd_out(1,1," _TIMER1_CH_A ")
+;MyProject.mbas,259 :: 		lcd_out(1,1," _TIMER1_CH_A ")
 	MOVW       R30, R28
 	LDI        R27, 32
 	ST         Z+, R27
@@ -1055,13 +1032,15 @@ _PROGRAM3:
 	CALL       _Lcd_Out+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,274 :: 		inttostr(j,txt)
+;MyProject.mbas,260 :: 		inttostr(j,txt)
+	PUSH       R3
+	PUSH       R2
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
 	MOV        R5, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,275 :: 		lcd_out(2,5,txt)
+;MyProject.mbas,261 :: 		lcd_out(2,5,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1071,7 +1050,7 @@ _PROGRAM3:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,276 :: 		lcd_out(1,1,"Pwm2 ")
+;MyProject.mbas,262 :: 		lcd_out(1,1,"Pwm2 ")
 	MOVW       R30, R28
 	LDI        R27, 80
 	ST         Z+, R27
@@ -1092,7 +1071,7 @@ _PROGRAM3:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,277 :: 		inttostr(150,txt)
+;MyProject.mbas,263 :: 		inttostr(150,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1102,7 +1081,7 @@ _PROGRAM3:
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,278 :: 		lcd_out(2,5,txt )
+;MyProject.mbas,264 :: 		lcd_out(2,5,txt )
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1112,12 +1091,27 @@ _PROGRAM3:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,280 :: 		end sub
-L_end_PROGRAM3:
-	POP        R5
-	POP        R4
-	POP        R3
 	POP        R2
+	POP        R3
+	POP        R4
+	POP        R5
+;MyProject.mbas,265 :: 		inc(J)
+	MOVW       R18, R2
+	SUBI       R18, 255
+	SBCI       R19, 255
+	MOVW       R2, R18
+;MyProject.mbas,266 :: 		loop until J>=255
+	LDI        R16, 255
+	LDI        R17, 0
+	CP         R18, R16
+	CPC        R19, R17
+	BRLT       L__PROGRAM3309
+	JMP        L__PROGRAM378
+L__PROGRAM3309:
+	JMP        L__PROGRAM375
+L__PROGRAM378:
+;MyProject.mbas,267 :: 		end sub
+L_end_PROGRAM3:
 	ADIW       R28, 14
 	OUT        SPL+0, R28
 	OUT        SPL+1, R29
@@ -1136,34 +1130,34 @@ _PROGRAM4:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,283 :: 		sub procedure PROGRAM4 (DIM J,dl AS integer)
-;MyProject.mbas,284 :: 		P=J
+;MyProject.mbas,270 :: 		sub procedure PROGRAM4 (DIM J,dl AS integer)
+;MyProject.mbas,271 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,286 :: 		p=255-j
+;MyProject.mbas,273 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,287 :: 		Lcd_0()
+;MyProject.mbas,274 :: 		Lcd_0()
 	PUSH       R3
 	PUSH       R2
 	CALL       _Lcd_0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,288 :: 		do
-L__PROGRAM475:
-;MyProject.mbas,290 :: 		Move_Delay()
+;MyProject.mbas,275 :: 		do
+L__PROGRAM481:
+;MyProject.mbas,277 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,293 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+;MyProject.mbas,280 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	LDI        R27, 17
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,294 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+;MyProject.mbas,281 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, 18
@@ -1175,9 +1169,16 @@ L__PROGRAM475:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,295 :: 		PWM2_Set_Duty(j)
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,296 :: 		lcd_out(1,1,"TIMER1_CH_A ")
+;MyProject.mbas,282 :: 		SetPWM0(-1)
+	PUSH       R3
+	PUSH       R2
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
+	POP        R2
+	POP        R3
+;MyProject.mbas,283 :: 		lcd_out(1,1,"TIMER1_CH_A ")
 	MOVW       R30, R28
 	LDI        R27, 84
 	ST         Z+, R27
@@ -1218,7 +1219,7 @@ L__PROGRAM475:
 	CALL       _Lcd_Out+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,297 :: 		inttostr(j,txt)
+;MyProject.mbas,284 :: 		inttostr(j,txt)
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, #lo_addr(_txt+0)
@@ -1226,7 +1227,7 @@ L__PROGRAM475:
 	LDI        R27, hi_addr(_txt+0)
 	MOV        R5, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,298 :: 		lcd_out(1,11,txt)
+;MyProject.mbas,285 :: 		lcd_out(1,11,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1236,7 +1237,7 @@ L__PROGRAM475:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,299 :: 		inttostr(p,txt)
+;MyProject.mbas,286 :: 		inttostr(p,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1244,7 +1245,7 @@ L__PROGRAM475:
 	LDS        R2, _p+0
 	LDS        R3, _p+1
 	CALL       _IntToStr+0
-;MyProject.mbas,300 :: 		lcd_out(2,1,"TIMER1_CH_B ")
+;MyProject.mbas,287 :: 		lcd_out(2,1,"TIMER1_CH_B ")
 	MOVW       R30, R28
 	LDI        R27, 84
 	ST         Z+, R27
@@ -1279,7 +1280,7 @@ L__PROGRAM475:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,301 :: 		lcd_out(2,11,txt)
+;MyProject.mbas,288 :: 		lcd_out(2,11,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1289,7 +1290,7 @@ L__PROGRAM475:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,302 :: 		lcd_out(1,1,"Pwm2 ")
+;MyProject.mbas,289 :: 		lcd_out(1,1,"Pwm2 ")
 	MOVW       R30, R28
 	LDI        R27, 80
 	ST         Z+, R27
@@ -1310,7 +1311,7 @@ L__PROGRAM475:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,303 :: 		inttostr(150,txt)
+;MyProject.mbas,290 :: 		inttostr(150,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1320,7 +1321,7 @@ L__PROGRAM475:
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _IntToStr+0
-;MyProject.mbas,304 :: 		lcd_out(2,5,txt )
+;MyProject.mbas,291 :: 		lcd_out(2,5,txt )
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -1334,29 +1335,29 @@ L__PROGRAM475:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,305 :: 		inc(J)
+;MyProject.mbas,292 :: 		inc(J)
 	MOVW       R18, R2
 	SUBI       R18, 255
 	SBCI       R19, 255
 	MOVW       R2, R18
-;MyProject.mbas,306 :: 		dec(p)
+;MyProject.mbas,293 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,313 :: 		loop until J>=255
+;MyProject.mbas,300 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__PROGRAM4338
-	JMP        L__PROGRAM478
-L__PROGRAM4338:
-	JMP        L__PROGRAM475
-L__PROGRAM478:
-;MyProject.mbas,314 :: 		end sub
+	BRLT       L__PROGRAM4311
+	JMP        L__PROGRAM484
+L__PROGRAM4311:
+	JMP        L__PROGRAM481
+L__PROGRAM484:
+;MyProject.mbas,301 :: 		end sub
 L_end_PROGRAM4:
 	ADIW       R28, 12
 	OUT        SPL+0, R28
@@ -1368,34 +1369,34 @@ L_end_PROGRAM4:
 
 _PROGRAM5:
 
-;MyProject.mbas,317 :: 		sub procedure PROGRAM5 (DIM J,dl AS integer)
-;MyProject.mbas,318 :: 		P=J
+;MyProject.mbas,304 :: 		sub procedure PROGRAM5 (DIM J,dl AS integer)
+;MyProject.mbas,305 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,320 :: 		p=255-j
+;MyProject.mbas,307 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,321 :: 		do
-L__PROGRAM581:
-;MyProject.mbas,322 :: 		inc(J)
+;MyProject.mbas,308 :: 		do
+L__PROGRAM587:
+;MyProject.mbas,309 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,323 :: 		dec(p)
+;MyProject.mbas,310 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,324 :: 		Move_Delay()
+;MyProject.mbas,311 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,327 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+;MyProject.mbas,314 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	PUSH       R3
@@ -1407,62 +1408,64 @@ L__PROGRAM581:
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,328 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+;MyProject.mbas,315 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R4
 	POP        R5
-;MyProject.mbas,329 :: 		PWM2_Set_Duty(p)
+;MyProject.mbas,316 :: 		SetPWM0(-1)
 	PUSH       R3
 	PUSH       R2
-	LDS        R2, _p+0
-	CALL       _PWM2_Set_Duty+0
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,336 :: 		loop until J>=255
+;MyProject.mbas,323 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM5340
-	JMP        L__PROGRAM584
-L__PROGRAM5340:
-	JMP        L__PROGRAM581
-L__PROGRAM584:
-;MyProject.mbas,337 :: 		end sub
+	BRLT       L__PROGRAM5313
+	JMP        L__PROGRAM590
+L__PROGRAM5313:
+	JMP        L__PROGRAM587
+L__PROGRAM590:
+;MyProject.mbas,324 :: 		end sub
 L_end_PROGRAM5:
 	RET
 ; end of _PROGRAM5
 
 _PROGRAM6:
 
-;MyProject.mbas,340 :: 		sub procedure PROGRAM6 (DIM J,dl AS integer)
-;MyProject.mbas,341 :: 		P=J
+;MyProject.mbas,327 :: 		sub procedure PROGRAM6 (DIM J,dl AS integer)
+;MyProject.mbas,328 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,343 :: 		p=255-j
+;MyProject.mbas,330 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,344 :: 		do
-L__PROGRAM687:
-;MyProject.mbas,346 :: 		Move_Delay()
+;MyProject.mbas,331 :: 		do
+L__PROGRAM693:
+;MyProject.mbas,333 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,349 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+;MyProject.mbas,336 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, 17
 	MOV        R4, R27
-	LDS        R2, _p+0
-	LDS        R3, _p+1
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,350 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+;MyProject.mbas,337 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	LDS        R2, _p+0
@@ -1472,9 +1475,9 @@ L__PROGRAM687:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,351 :: 		PWM2_Set_Duty(j)
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,352 :: 		J=j+3 p=p-3
+;MyProject.mbas,338 :: 		SetPWM0(j)
+	CALL       _SetPWM0+0
+;MyProject.mbas,339 :: 		J=j+3 p=p-3
 	MOVW       R18, R2
 	SUBI       R18, 253
 	SBCI       R19, 255
@@ -1485,51 +1488,51 @@ L__PROGRAM687:
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,361 :: 		loop until J>=255
+;MyProject.mbas,348 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__PROGRAM6342
-	JMP        L__PROGRAM690
-L__PROGRAM6342:
-	JMP        L__PROGRAM687
-L__PROGRAM690:
-;MyProject.mbas,362 :: 		end sub
+	BRLT       L__PROGRAM6315
+	JMP        L__PROGRAM696
+L__PROGRAM6315:
+	JMP        L__PROGRAM693
+L__PROGRAM696:
+;MyProject.mbas,349 :: 		end sub
 L_end_PROGRAM6:
 	RET
 ; end of _PROGRAM6
 
 _PROGRAM7:
 
-;MyProject.mbas,365 :: 		sub procedure PROGRAM7 (DIM J,dl AS integer)
-;MyProject.mbas,366 :: 		P=J
+;MyProject.mbas,352 :: 		sub procedure PROGRAM7 (DIM J,dl AS integer)
+;MyProject.mbas,353 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,368 :: 		p=255-j
+;MyProject.mbas,355 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,369 :: 		do
-L__PROGRAM793:
-;MyProject.mbas,370 :: 		inc(J)
+;MyProject.mbas,356 :: 		do
+L__PROGRAM799:
+;MyProject.mbas,357 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,371 :: 		dec(p)
+;MyProject.mbas,358 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,372 :: 		Move_Delay()
+;MyProject.mbas,359 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,375 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+;MyProject.mbas,362 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	PUSH       R3
@@ -1539,230 +1542,201 @@ L__PROGRAM793:
 	LDS        R2, _p+0
 	LDS        R3, _p+1
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,377 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
+;MyProject.mbas,364 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
-	LDS        R2, _p+0
-	LDS        R3, _p+1
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R2
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,378 :: 		PWM2_Set_Duty(j)
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,380 :: 		Move_Delay()
+;MyProject.mbas,365 :: 		SetPWM0(j)
+	CALL       _SetPWM0+0
+;MyProject.mbas,367 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,381 :: 		PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
-	PUSH       R5
-	PUSH       R4
-	PUSH       R3
-	PUSH       R2
-	LDI        R27, 17
-	MOV        R4, R27
-	CLR        R2
-	CLR        R3
-	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,383 :: 		PWM16bit_Change_Duty( p*0, _TIMER1_CH_B )
-	LDI        R27, 18
-	MOV        R4, R27
-	CLR        R2
-	CLR        R3
-	CALL       _PWM16bit_Change_Duty+0
-	POP        R2
-	POP        R3
-	POP        R4
-	POP        R5
-;MyProject.mbas,384 :: 		PWM2_Set_Duty(j*0)
-	PUSH       R3
-	PUSH       R2
-	CLR        R2
-	CALL       _PWM2_Set_Duty+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,391 :: 		loop until J>=255
+;MyProject.mbas,378 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM7344
-	JMP        L__PROGRAM796
-L__PROGRAM7344:
-	JMP        L__PROGRAM793
-L__PROGRAM796:
-;MyProject.mbas,392 :: 		end sub
+	BRLT       L__PROGRAM7317
+	JMP        L__PROGRAM7102
+L__PROGRAM7317:
+	JMP        L__PROGRAM799
+L__PROGRAM7102:
+;MyProject.mbas,379 :: 		end sub
 L_end_PROGRAM7:
 	RET
 ; end of _PROGRAM7
 
 _PROGRAM8:
 
-;MyProject.mbas,395 :: 		sub procedure PROGRAM8 (DIM J,dl AS integer)
-;MyProject.mbas,396 :: 		P=J
+;MyProject.mbas,382 :: 		sub procedure PROGRAM8 (DIM J,dl AS integer)
+;MyProject.mbas,383 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,398 :: 		p=255-j
+;MyProject.mbas,385 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,399 :: 		do
-L__PROGRAM899:
-;MyProject.mbas,400 :: 		inc(J)
+;MyProject.mbas,386 :: 		do
+L__PROGRAM8105:
+;MyProject.mbas,387 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,401 :: 		dec(p)
+;MyProject.mbas,388 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,402 :: 		Move_Delay()
+;MyProject.mbas,389 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,405 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+;MyProject.mbas,392 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
+	LDI        R27, 17
+	MOV        R4, R27
+	CALL       _PWM16bit_Change_Duty+0
+;MyProject.mbas,393 :: 		PWM16bit_Change_Duty(p, _TIMER1_CH_B )
 	PUSH       R3
 	PUSH       R2
-	LDI        R27, 17
+	LDI        R27, 18
 	MOV        R4, R27
 	LDS        R2, _p+0
 	LDS        R3, _p+1
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,406 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-	LDI        R27, 18
-	MOV        R4, R27
-	CALL       _PWM16bit_Change_Duty+0
 	POP        R4
 	POP        R5
-;MyProject.mbas,407 :: 		PWM2_Set_Duty(0)
+;MyProject.mbas,394 :: 		SetPWM0(-1)
 	PUSH       R3
 	PUSH       R2
-	CLR        R2
-	CALL       _PWM2_Set_Duty+0
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,414 :: 		loop until J>=255
+;MyProject.mbas,401 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM8346
-	JMP        L__PROGRAM8102
-L__PROGRAM8346:
-	JMP        L__PROGRAM899
-L__PROGRAM8102:
-;MyProject.mbas,415 :: 		end sub
+	BRLT       L__PROGRAM8319
+	JMP        L__PROGRAM8108
+L__PROGRAM8319:
+	JMP        L__PROGRAM8105
+L__PROGRAM8108:
+;MyProject.mbas,402 :: 		end sub
 L_end_PROGRAM8:
 	RET
 ; end of _PROGRAM8
 
 _PROGRAM9:
 
-;MyProject.mbas,419 :: 		sub procedure PROGRAM9 (DIM J,dl AS integer)
-;MyProject.mbas,420 :: 		P=J
+;MyProject.mbas,406 :: 		sub procedure PROGRAM9 (DIM J,dl AS integer)
+;MyProject.mbas,407 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,422 :: 		p=255-j
+;MyProject.mbas,409 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,423 :: 		do
-L__PROGRAM9105:
-;MyProject.mbas,424 :: 		inc(J)
+;MyProject.mbas,410 :: 		do
+L__PROGRAM9111:
+;MyProject.mbas,411 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,425 :: 		dec(p)
+;MyProject.mbas,412 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,426 :: 		Move_Delay()
+;MyProject.mbas,413 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,429 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+;MyProject.mbas,416 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
-	PUSH       R3
-	PUSH       R2
 	LDI        R27, 17
 	MOV        R4, R27
-	CLR        R2
-	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,430 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+;MyProject.mbas,417 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
 	POP        R4
 	POP        R5
-;MyProject.mbas,431 :: 		PWM2_Set_Duty(p)
+;MyProject.mbas,418 :: 		SetPWM0(-1)
 	PUSH       R3
 	PUSH       R2
-	LDS        R2, _p+0
-	CALL       _PWM2_Set_Duty+0
+	LDI        R27, 255
+	MOV        R2, R27
+	MOV        R3, R27
+	CALL       _SetPWM0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,438 :: 		loop until J>=255
+;MyProject.mbas,425 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM9348
-	JMP        L__PROGRAM9108
-L__PROGRAM9348:
-	JMP        L__PROGRAM9105
-L__PROGRAM9108:
-;MyProject.mbas,439 :: 		end sub
+	BRLT       L__PROGRAM9321
+	JMP        L__PROGRAM9114
+L__PROGRAM9321:
+	JMP        L__PROGRAM9111
+L__PROGRAM9114:
+;MyProject.mbas,426 :: 		end sub
 L_end_PROGRAM9:
 	RET
 ; end of _PROGRAM9
 
 _PROGRAM10:
 
-;MyProject.mbas,442 :: 		sub procedure PROGRAM10 (DIM J,dl AS integer)
-;MyProject.mbas,443 :: 		P=J
+;MyProject.mbas,429 :: 		sub procedure PROGRAM10 (DIM J,dl AS integer)
+;MyProject.mbas,430 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,445 :: 		p=255-j
+;MyProject.mbas,432 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,446 :: 		do
-L__PROGRAM10111:
-;MyProject.mbas,447 :: 		inc(J)
+;MyProject.mbas,433 :: 		do
+L__PROGRAM10117:
+;MyProject.mbas,434 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,448 :: 		dec(p)
+;MyProject.mbas,435 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,449 :: 		Move_Delay()
+;MyProject.mbas,436 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,452 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+;MyProject.mbas,439 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	PUSH       R3
@@ -1772,74 +1746,67 @@ L__PROGRAM10111:
 	CLR        R2
 	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,453 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+	POP        R2
+	POP        R3
+;MyProject.mbas,440 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
-	CLR        R2
-	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-	POP        R2
-	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,454 :: 		PWM2_Set_Duty(p)
-	PUSH       R3
-	PUSH       R2
-	LDS        R2, _p+0
-	CALL       _PWM2_Set_Duty+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,461 :: 		loop until J>=255
+;MyProject.mbas,441 :: 		SetPWM0(j)
+	CALL       _SetPWM0+0
+;MyProject.mbas,448 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM10350
-	JMP        L__PROGRAM10114
-L__PROGRAM10350:
-	JMP        L__PROGRAM10111
-L__PROGRAM10114:
-;MyProject.mbas,462 :: 		end sub
+	BRLT       L__PROGRAM10323
+	JMP        L__PROGRAM10120
+L__PROGRAM10323:
+	JMP        L__PROGRAM10117
+L__PROGRAM10120:
+;MyProject.mbas,449 :: 		end sub
 L_end_PROGRAM10:
 	RET
 ; end of _PROGRAM10
 
 _PROGRAM11:
 
-;MyProject.mbas,465 :: 		sub procedure PROGRAM11 (DIM J,dl AS integer)
-;MyProject.mbas,466 :: 		P=J
+;MyProject.mbas,452 :: 		sub procedure PROGRAM11 (DIM J,dl AS integer)
+;MyProject.mbas,453 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,468 :: 		p=255-j
+;MyProject.mbas,455 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,469 :: 		do
-L__PROGRAM11117:
-;MyProject.mbas,470 :: 		inc(J)
+;MyProject.mbas,456 :: 		do
+L__PROGRAM11123:
+;MyProject.mbas,457 :: 		inc(J)
 	MOVW       R16, R2
 	SUBI       R16, 255
 	SBCI       R17, 255
 	MOVW       R2, R16
-;MyProject.mbas,471 :: 		dec(p)
+;MyProject.mbas,458 :: 		dec(p)
 	LDS        R16, _p+0
 	LDS        R17, _p+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,472 :: 		Move_Delay()
+;MyProject.mbas,459 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,475 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+;MyProject.mbas,462 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	LDI        R27, 17
 	MOV        R4, R27
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,476 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+;MyProject.mbas,463 :: 		PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, 18
@@ -1851,109 +1818,98 @@ L__PROGRAM11117:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,477 :: 		PWM2_Set_Duty(p)
-	PUSH       R3
-	PUSH       R2
-	LDS        R2, _p+0
-	CALL       _PWM2_Set_Duty+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,484 :: 		loop until J>=255
+;MyProject.mbas,464 :: 		SetPWM0(j)
+	CALL       _SetPWM0+0
+;MyProject.mbas,471 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R2, R16
 	CPC        R3, R17
-	BRLT       L__PROGRAM11352
-	JMP        L__PROGRAM11120
-L__PROGRAM11352:
-	JMP        L__PROGRAM11117
-L__PROGRAM11120:
-;MyProject.mbas,485 :: 		end sub
+	BRLT       L__PROGRAM11325
+	JMP        L__PROGRAM11126
+L__PROGRAM11325:
+	JMP        L__PROGRAM11123
+L__PROGRAM11126:
+;MyProject.mbas,472 :: 		end sub
 L_end_PROGRAM11:
 	RET
 ; end of _PROGRAM11
 
 _PROGRAM12:
 
-;MyProject.mbas,489 :: 		sub procedure PROGRAM12 (DIM J,dl AS integer)
-;MyProject.mbas,490 :: 		P=J
+;MyProject.mbas,476 :: 		sub procedure PROGRAM12 (DIM J,dl AS integer)
+;MyProject.mbas,477 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,492 :: 		p=255-j
+;MyProject.mbas,479 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,493 :: 		do
-L__PROGRAM12123:
-;MyProject.mbas,496 :: 		Move_Delay()
+;MyProject.mbas,480 :: 		do
+L__PROGRAM12129:
+;MyProject.mbas,483 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,499 :: 		PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+;MyProject.mbas,486 :: 		PWM16bit_Change_Duty(0, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
+	PUSH       R3
+	PUSH       R2
 	LDI        R27, 17
 	MOV        R4, R27
+	CLR        R2
+	CLR        R3
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,500 :: 		PWM16bit_Change_Duty( p, _TIMER1_CH_B )
-	PUSH       R3
-	PUSH       R2
+	POP        R2
+	POP        R3
+;MyProject.mbas,487 :: 		PWM16bit_Change_Duty( j, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
-	LDS        R2, _p+0
-	LDS        R3, _p+1
 	CALL       _PWM16bit_Change_Duty+0
-	POP        R2
-	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,501 :: 		PWM2_Set_Duty(1)
-	PUSH       R3
-	PUSH       R2
-	LDI        R27, 1
-	MOV        R2, R27
-	CALL       _PWM2_Set_Duty+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,502 :: 		J=j+1
+;MyProject.mbas,488 :: 		SetPWM0(j)
+	CALL       _SetPWM0+0
+;MyProject.mbas,489 :: 		J=j+1
 	MOVW       R18, R2
 	SUBI       R18, 255
 	SBCI       R19, 255
 	MOVW       R2, R18
-;MyProject.mbas,509 :: 		loop until J>=255
+;MyProject.mbas,496 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__PROGRAM12354
-	JMP        L__PROGRAM12126
-L__PROGRAM12354:
-	JMP        L__PROGRAM12123
-L__PROGRAM12126:
-;MyProject.mbas,510 :: 		end sub
+	BRLT       L__PROGRAM12327
+	JMP        L__PROGRAM12132
+L__PROGRAM12327:
+	JMP        L__PROGRAM12129
+L__PROGRAM12132:
+;MyProject.mbas,497 :: 		end sub
 L_end_PROGRAM12:
 	RET
 ; end of _PROGRAM12
 
 _PROGRAM13:
 
-;MyProject.mbas,513 :: 		sub procedure PROGRAM13 (DIM J,dl AS integer)
-;MyProject.mbas,514 :: 		P=J
+;MyProject.mbas,500 :: 		sub procedure PROGRAM13 (DIM J,dl AS integer)
+;MyProject.mbas,501 :: 		P=J
 	STS        _p+0, R2
 	STS        _p+1, R3
-;MyProject.mbas,516 :: 		p=255-j
+;MyProject.mbas,503 :: 		p=255-j
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _p+0, R16
 	STS        _p+1, R17
-;MyProject.mbas,517 :: 		do
-L__PROGRAM13129:
-;MyProject.mbas,520 :: 		Move_Delay()
+;MyProject.mbas,504 :: 		do
+L__PROGRAM13135:
+;MyProject.mbas,507 :: 		Move_Delay()
 	CALL       _Move_Delay+0
-;MyProject.mbas,523 :: 		PWM16bit_Change_Duty(30, _TIMER1_CH_A )
+;MyProject.mbas,510 :: 		PWM16bit_Change_Duty(30, _TIMER1_CH_A )
 	PUSH       R5
 	PUSH       R4
 	PUSH       R3
@@ -1965,7 +1921,7 @@ L__PROGRAM13129:
 	LDI        R27, 0
 	MOV        R3, R27
 	CALL       _PWM16bit_Change_Duty+0
-;MyProject.mbas,524 :: 		PWM16bit_Change_Duty( 10, _TIMER1_CH_B )
+;MyProject.mbas,511 :: 		PWM16bit_Change_Duty( 10, _TIMER1_CH_B )
 	LDI        R27, 18
 	MOV        R4, R27
 	LDI        R27, 10
@@ -1977,30 +1933,32 @@ L__PROGRAM13129:
 	POP        R3
 	POP        R4
 	POP        R5
-;MyProject.mbas,525 :: 		PWM2_Set_Duty(100)
+;MyProject.mbas,512 :: 		SetPWM0(100)
 	PUSH       R3
 	PUSH       R2
 	LDI        R27, 100
 	MOV        R2, R27
-	CALL       _PWM2_Set_Duty+0
+	LDI        R27, 0
+	MOV        R3, R27
+	CALL       _SetPWM0+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,526 :: 		J=j+3
+;MyProject.mbas,513 :: 		J=j+3
 	MOVW       R18, R2
 	SUBI       R18, 253
 	SBCI       R19, 255
 	MOVW       R2, R18
-;MyProject.mbas,533 :: 		loop until J>=255
+;MyProject.mbas,520 :: 		loop until J>=255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__PROGRAM13356
-	JMP        L__PROGRAM13132
-L__PROGRAM13356:
-	JMP        L__PROGRAM13129
-L__PROGRAM13132:
-;MyProject.mbas,534 :: 		end sub
+	BRLT       L__PROGRAM13329
+	JMP        L__PROGRAM13138
+L__PROGRAM13329:
+	JMP        L__PROGRAM13135
+L__PROGRAM13138:
+;MyProject.mbas,521 :: 		end sub
 L_end_PROGRAM13:
 	RET
 ; end of _PROGRAM13
@@ -2015,8 +1973,8 @@ _PWM_Initialize:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,538 :: 		ocr0,ocr2, k as integer
-;MyProject.mbas,539 :: 		J=0
+;MyProject.mbas,525 :: 		ocr0,ocr2, k as integer
+;MyProject.mbas,526 :: 		J=0
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -2026,19 +1984,22 @@ _PWM_Initialize:
 	LDI        R27, 0
 	STD        Y+0, R27
 	STD        Y+1, R27
-;MyProject.mbas,544 :: 		DDb1_bit = 1                    ' set portd pin0 as output pin for ufa fountain
+;MyProject.mbas,531 :: 		DDb1_bit = 1                    ' set portd pin0 as output pin for ufa fountain
 	IN         R27, DDB1_bit+0
 	SBR        R27, BitMask(DDB1_bit+0)
 	OUT        DDB1_bit+0, R27
-;MyProject.mbas,545 :: 		DDb2_bit = 1                    ' Set PORTB pin 3 as output pin for the PWM (according to datasheet)
+;MyProject.mbas,532 :: 		DDb2_bit = 1                    ' Set PORTB pin 3 as output pin for the PWM (according to datasheet)
 	IN         R27, DDB2_bit+0
 	SBR        R27, BitMask(DDB2_bit+0)
 	OUT        DDB2_bit+0, R27
-;MyProject.mbas,546 :: 		DDb3_bit = 1                    ' Set PORTD pin 7 as output pin for the PWM1 (according to datasheet)
+;MyProject.mbas,533 :: 		DDb3_bit = 1                    ' Set PORTD pin 7 as output pin for the PWM1 (according to datasheet)
 	IN         R27, DDB3_bit+0
 	SBR        R27, BitMask(DDB3_bit+0)
 	OUT        DDB3_bit+0, R27
-;MyProject.mbas,551 :: 		PWM2_Init(_PWM2_FAST_MODE, _PWM2_PRESCALER_8, _PWM2_NON_INVERTED, J)
+;MyProject.mbas,538 :: 		TCCR2 = (1<<FOC2)or (1<<COM21)or(1<<COM20) or(1<<WGM20) or (1<<CS00) ''Pwm0 or pwm1 in meicrobasic
+	LDI        R27, 241
+	OUT        TCCR2+0, R27
+;MyProject.mbas,539 :: 		PWM2_Init(_PWM2_FAST_MODE, _PWM2_PRESCALER_8, _PWM2_NON_INVERTED, J)
 	CLR        R5
 	LDI        R27, 32
 	MOV        R4, R27
@@ -2047,7 +2008,7 @@ _PWM_Initialize:
 	LDI        R27, 72
 	MOV        R2, R27
 	CALL       _PWM2_Init+0
-;MyProject.mbas,552 :: 		PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
+;MyProject.mbas,540 :: 		PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
 	LDI        R27, 1
 	MOV        R7, R27
 	LDD        R5, Y+0
@@ -2059,10 +2020,11 @@ _PWM_Initialize:
 	LDI        R27, 11
 	MOV        R2, R27
 	CALL       _PWM16bit_Init+0
-;MyProject.mbas,556 :: 		PWM2_Set_Duty(j)
+;MyProject.mbas,544 :: 		SetPWM0(j)
 	LDD        R2, Y+0
-	CALL       _PWM2_Set_Duty+0
-;MyProject.mbas,563 :: 		end sub
+	LDD        R3, Y+1
+	CALL       _SetPWM0+0
+;MyProject.mbas,551 :: 		end sub
 L_end_PWM_Initialize:
 	POP        R7
 	POP        R6
@@ -2080,28 +2042,28 @@ L_end_PWM_Initialize:
 
 _LOOP1:
 
-;MyProject.mbas,567 :: 		sub procedure LOOP1 (DIM J AS integer)
-;MyProject.mbas,568 :: 		K=0
+;MyProject.mbas,555 :: 		sub procedure LOOP1 (DIM J AS integer)
+;MyProject.mbas,556 :: 		K=0
 	PUSH       R4
 	PUSH       R5
 	LDI        R27, 0
 	STS        _K+0, R27
 	STS        _K+1, R27
-;MyProject.mbas,570 :: 		do
-L__LOOP1136:
-;MyProject.mbas,571 :: 		inc(K)
+;MyProject.mbas,558 :: 		do
+L__LOOP1142:
+;MyProject.mbas,559 :: 		inc(K)
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	SUBI       R16, 255
 	SBCI       R17, 255
 	STS        _K+0, R16
 	STS        _K+1, R17
-;MyProject.mbas,572 :: 		J= K*10
+;MyProject.mbas,560 :: 		J= K*10
 	LDI        R20, 10
 	LDI        R21, 0
 	CALL       _HWMul_16x16+0
 	MOVW       R2, R16
-;MyProject.mbas,573 :: 		PROGRAM1(J,k)
+;MyProject.mbas,561 :: 		PROGRAM1(J,k)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _K+0
@@ -2110,12 +2072,12 @@ L__LOOP1136:
 	CALL       _PROGRAM1+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,576 :: 		J=100
+;MyProject.mbas,564 :: 		J=100
 	LDI        R27, 100
 	MOV        R2, R27
 	LDI        R27, 0
 	MOV        R3, R27
-;MyProject.mbas,577 :: 		PROGRAM3(J,k)
+;MyProject.mbas,565 :: 		PROGRAM3(J,k)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _K+0
@@ -2127,30 +2089,34 @@ L__LOOP1136:
 	CALL       _PROGRAM3+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,578 :: 		delay_ms(2000)
-	LDI        R18, 41
-	LDI        R17, 150
-	LDI        R16, 128
-L__LOOP1141:
+;MyProject.mbas,566 :: 		delay_ms(2000)
+	LDI        R18, 82
+	LDI        R17, 43
+	LDI        R16, 0
+L__LOOP1147:
 	DEC        R16
-	BRNE       L__LOOP1141
+	BRNE       L__LOOP1147
 	DEC        R17
-	BRNE       L__LOOP1141
+	BRNE       L__LOOP1147
 	DEC        R18
-	BRNE       L__LOOP1141
-;MyProject.mbas,579 :: 		loop until K = 10
+	BRNE       L__LOOP1147
+	NOP
+	NOP
+	NOP
+	NOP
+;MyProject.mbas,567 :: 		loop until K = 10
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	CPI        R17, 0
-	BRNE       L__LOOP1359
+	BRNE       L__LOOP1332
 	CPI        R16, 10
-L__LOOP1359:
-	BRNE       L__LOOP1360
-	JMP        L__LOOP1139
-L__LOOP1360:
-	JMP        L__LOOP1136
-L__LOOP1139:
-;MyProject.mbas,580 :: 		end sub
+L__LOOP1332:
+	BRNE       L__LOOP1333
+	JMP        L__LOOP1145
+L__LOOP1333:
+	JMP        L__LOOP1142
+L__LOOP1145:
+;MyProject.mbas,568 :: 		end sub
 L_end_LOOP1:
 	POP        R5
 	POP        R4
@@ -2159,298 +2125,21 @@ L_end_LOOP1:
 
 _LOOP11:
 
-;MyProject.mbas,583 :: 		sub procedure LOOP11 (DIM J AS integer)
-;MyProject.mbas,584 :: 		K=150
+;MyProject.mbas,571 :: 		sub procedure LOOP11 (DIM J AS integer)
+;MyProject.mbas,572 :: 		K=0
 	PUSH       R4
 	PUSH       R5
-	LDI        R27, 150
-	STS        _K+0, R27
 	LDI        R27, 0
+	STS        _K+0, R27
 	STS        _K+1, R27
-;MyProject.mbas,585 :: 		kk=255 -k
-	LDI        R27, 105
+;MyProject.mbas,573 :: 		kk=255 -k
+	LDI        R27, 255
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,588 :: 		do
-L__LOOP11144:
-;MyProject.mbas,590 :: 		PROGRAM9(K,dl2)
-	PUSH       R3
-	PUSH       R2
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM9+0
-;MyProject.mbas,591 :: 		PROGRAM2(kk,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _kk+0
-	LDS        R3, _kk+1
-	CALL       _PROGRAM2+0
-;MyProject.mbas,592 :: 		PROGRAM4(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM4+0
-;MyProject.mbas,593 :: 		PROGRAM10(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM10+0
-;MyProject.mbas,594 :: 		PROGRAM5(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM5+0
-;MyProject.mbas,595 :: 		PROGRAM6(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM6+0
-;MyProject.mbas,596 :: 		PROGRAM7(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM7+0
-;MyProject.mbas,597 :: 		PROGRAM8(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM8+0
-;MyProject.mbas,598 :: 		PROGRAM11(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM11+0
-;MyProject.mbas,600 :: 		PROGRAM13(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM13+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,601 :: 		K=K+3
-	LDS        R16, _K+0
-	LDS        R17, _K+1
-	SUBI       R16, 253
-	SBCI       R17, 255
-	STS        _K+0, R16
-	STS        _K+1, R17
-;MyProject.mbas,602 :: 		kk=kk - 3
-	LDS        R16, _kk+0
-	LDS        R17, _kk+1
-	SUBI       R16, 3
-	SBCI       R17, 0
-	STS        _kk+0, R16
-	STS        _kk+1, R17
-;MyProject.mbas,607 :: 		if mode<>1 then
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__LOOP11362
-	CPI        R16, 1
-L__LOOP11362:
-	BRNE       L__LOOP11363
-	JMP        L__LOOP11150
-L__LOOP11363:
-;MyProject.mbas,608 :: 		break
-	JMP        L__LOOP11146
+;MyProject.mbas,576 :: 		do
 L__LOOP11150:
-;MyProject.mbas,611 :: 		loop until K >= 255
-	LDS        R18, _K+0
-	LDS        R19, _K+1
-	LDI        R16, 255
-	LDI        R17, 0
-	CP         R18, R16
-	CPC        R19, R17
-	BRLT       L__LOOP11364
-	JMP        L__LOOP11147
-L__LOOP11364:
-	JMP        L__LOOP11144
-L__LOOP11147:
-L__LOOP11146:
-;MyProject.mbas,612 :: 		K=170
-	LDI        R27, 170
-	STS        _K+0, R27
-	LDI        R27, 0
-	STS        _K+1, R27
-;MyProject.mbas,613 :: 		kk=255-k
-	LDI        R27, 85
-	STS        _kk+0, R27
-	LDI        R27, 0
-	STS        _kk+1, R27
-;MyProject.mbas,614 :: 		do
-L__LOOP11152:
-;MyProject.mbas,616 :: 		PROGRAM9(K,dl2)
-	PUSH       R3
-	PUSH       R2
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM9+0
-;MyProject.mbas,618 :: 		PROGRAM4(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM4+0
-;MyProject.mbas,620 :: 		PROGRAM5(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM5+0
-;MyProject.mbas,622 :: 		PROGRAM7(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM7+0
-;MyProject.mbas,624 :: 		PROGRAM11(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM11+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,625 :: 		K=K+1
-	LDS        R16, _K+0
-	LDS        R17, _K+1
-	SUBI       R16, 255
-	SBCI       R17, 255
-	STS        _K+0, R16
-	STS        _K+1, R17
-;MyProject.mbas,626 :: 		kk=kk - 1
-	LDS        R16, _kk+0
-	LDS        R17, _kk+1
-	SUBI       R16, 1
-	SBCI       R17, 0
-	STS        _kk+0, R16
-	STS        _kk+1, R17
-;MyProject.mbas,627 :: 		if mode<>1 then
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__LOOP11365
-	CPI        R16, 1
-L__LOOP11365:
-	BRNE       L__LOOP11366
-	JMP        L__LOOP11158
-L__LOOP11366:
-;MyProject.mbas,628 :: 		break
-	JMP        L__LOOP11154
-L__LOOP11158:
-;MyProject.mbas,631 :: 		loop until K >= 255
-	LDS        R18, _K+0
-	LDS        R19, _K+1
-	LDI        R16, 255
-	LDI        R17, 0
-	CP         R18, R16
-	CPC        R19, R17
-	BRLT       L__LOOP11367
-	JMP        L__LOOP11155
-L__LOOP11367:
-	JMP        L__LOOP11152
-L__LOOP11155:
-L__LOOP11154:
-;MyProject.mbas,632 :: 		K=190
-	LDI        R27, 190
-	STS        _K+0, R27
-	LDI        R27, 0
-	STS        _K+1, R27
-;MyProject.mbas,633 :: 		kk=255-k
-	LDI        R27, 65
-	STS        _kk+0, R27
-	LDI        R27, 0
-	STS        _kk+1, R27
-;MyProject.mbas,634 :: 		do
-L__LOOP11160:
-;MyProject.mbas,637 :: 		PROGRAM2(kk,dl2)
-	PUSH       R3
-	PUSH       R2
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _kk+0
-	LDS        R3, _kk+1
-	CALL       _PROGRAM2+0
-;MyProject.mbas,641 :: 		PROGRAM6(k,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM6+0
-;MyProject.mbas,644 :: 		PROGRAM11(K,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _K+0
-	LDS        R3, _K+1
-	CALL       _PROGRAM11+0
-	POP        R2
-	POP        R3
-;MyProject.mbas,645 :: 		K=K+10
-	LDS        R16, _K+0
-	LDS        R17, _K+1
-	SUBI       R16, 246
-	SBCI       R17, 255
-	STS        _K+0, R16
-	STS        _K+1, R17
-;MyProject.mbas,646 :: 		kk=kk - 10
-	LDS        R16, _kk+0
-	LDS        R17, _kk+1
-	SUBI       R16, 10
-	SBCI       R17, 0
-	STS        _kk+0, R16
-	STS        _kk+1, R17
-;MyProject.mbas,647 :: 		if mode<>1 then
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__LOOP11368
-	CPI        R16, 1
-L__LOOP11368:
-	BRNE       L__LOOP11369
-	JMP        L__LOOP11166
-L__LOOP11369:
-;MyProject.mbas,648 :: 		break
-	JMP        L__LOOP11162
-L__LOOP11166:
-;MyProject.mbas,651 :: 		loop until K >= 255
-	LDS        R18, _K+0
-	LDS        R19, _K+1
-	LDI        R16, 255
-	LDI        R17, 0
-	CP         R18, R16
-	CPC        R19, R17
-	BRLT       L__LOOP11370
-	JMP        L__LOOP11163
-L__LOOP11370:
-	JMP        L__LOOP11160
-L__LOOP11163:
-L__LOOP11162:
-;MyProject.mbas,652 :: 		K=180
-	LDI        R27, 180
-	STS        _K+0, R27
-	LDI        R27, 0
-	STS        _K+1, R27
-;MyProject.mbas,653 :: 		kk=255-180
-	LDI        R27, 75
-	STS        _kk+0, R27
-	LDI        R27, 0
-	STS        _kk+1, R27
-;MyProject.mbas,654 :: 		do
-L__LOOP11168:
-;MyProject.mbas,655 :: 		PROGRAM1(k,dl2)
+;MyProject.mbas,577 :: 		PROGRAM1(k,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2458,79 +2147,106 @@ L__LOOP11168:
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM1+0
-;MyProject.mbas,657 :: 		PROGRAM2(kk,dl2)
-	LDS        R4, _dl2+0
-	LDS        R5, _dl2+1
-	LDS        R2, _kk+0
-	LDS        R3, _kk+1
-	CALL       _PROGRAM2+0
-;MyProject.mbas,659 :: 		PROGRAM10(K,dl2)
+;MyProject.mbas,578 :: 		PROGRAM2(k,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
-	CALL       _PROGRAM10+0
-;MyProject.mbas,661 :: 		PROGRAM6(k,dl2)
+	CALL       _PROGRAM2+0
+;MyProject.mbas,579 :: 		PROGRAM3(k,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM3+0
+;MyProject.mbas,580 :: 		PROGRAM4(k,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM4+0
+;MyProject.mbas,581 :: 		PROGRAM5(k,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM5+0
+;MyProject.mbas,582 :: 		PROGRAM6(k,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM6+0
-;MyProject.mbas,663 :: 		PROGRAM8(K,dl2)
+;MyProject.mbas,583 :: 		PROGRAM7(K,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM7+0
+;MyProject.mbas,584 :: 		PROGRAM8(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM8+0
-;MyProject.mbas,664 :: 		PROGRAM11(K,dl2)
+;MyProject.mbas,585 :: 		PROGRAM9(K,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM9+0
+;MyProject.mbas,586 :: 		PROGRAM10(K,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM10+0
+;MyProject.mbas,587 :: 		PROGRAM11(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM11+0
+;MyProject.mbas,588 :: 		PROGRAM12(K,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM12+0
+;MyProject.mbas,589 :: 		PROGRAM13(K,dl2)
+	LDS        R4, _dl2+0
+	LDS        R5, _dl2+1
+	LDS        R2, _K+0
+	LDS        R3, _K+1
+	CALL       _PROGRAM13+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,665 :: 		K=K+1
+;MyProject.mbas,590 :: 		K=K+3
 	LDS        R16, _K+0
 	LDS        R17, _K+1
-	SUBI       R16, 255
-	SBCI       R17, 255
-	STS        _K+0, R16
-	STS        _K+1, R17
-;MyProject.mbas,666 :: 		kk=kk - 1
+	MOVW       R18, R16
+	SUBI       R18, 253
+	SBCI       R19, 255
+	STS        _K+0, R18
+	STS        _K+1, R19
+;MyProject.mbas,591 :: 		kk=kk - 3
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
-	SUBI       R16, 1
+	SUBI       R16, 3
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,667 :: 		if mode<>1 then
-	LDS        R16, _mode+0
-	LDS        R17, _mode+1
-	CPI        R17, 0
-	BRNE       L__LOOP11371
-	CPI        R16, 1
-L__LOOP11371:
-	BRNE       L__LOOP11372
-	JMP        L__LOOP11174
-L__LOOP11372:
-;MyProject.mbas,668 :: 		break
-	JMP        L__LOOP11170
-L__LOOP11174:
-;MyProject.mbas,670 :: 		loop until K >= 255
-	LDS        R18, _K+0
-	LDS        R19, _K+1
+;MyProject.mbas,593 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__LOOP11373
-	JMP        L__LOOP11171
-L__LOOP11373:
-	JMP        L__LOOP11168
-L__LOOP11171:
-L__LOOP11170:
-;MyProject.mbas,672 :: 		end sub
+	BRLT       L__LOOP11335
+	JMP        L__LOOP11153
+L__LOOP11335:
+	JMP        L__LOOP11150
+L__LOOP11153:
+;MyProject.mbas,596 :: 		end sub
 L_end_LOOP11:
 	POP        R5
 	POP        R4
@@ -2539,22 +2255,22 @@ L_end_LOOP11:
 
 _loop22:
 
-;MyProject.mbas,674 :: 		sub procedure loop22(dim k2 as integer)
-;MyProject.mbas,675 :: 		K=k2
+;MyProject.mbas,598 :: 		sub procedure loop22(dim k2 as integer)
+;MyProject.mbas,599 :: 		K=k2
 	PUSH       R4
 	PUSH       R5
 	STS        _K+0, R2
 	STS        _K+1, R3
-;MyProject.mbas,677 :: 		kk=255 -k
+;MyProject.mbas,601 :: 		kk=255 -k
 	LDI        R16, 255
 	LDI        R17, 0
 	SUB        R16, R2
 	SBC        R17, R3
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,680 :: 		do
-L__loop22177:
-;MyProject.mbas,683 :: 		PROGRAM2(kk,dl2)
+;MyProject.mbas,604 :: 		do
+L__loop22156:
+;MyProject.mbas,607 :: 		PROGRAM2(kk,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2562,13 +2278,13 @@ L__loop22177:
 	LDS        R2, _kk+0
 	LDS        R3, _kk+1
 	CALL       _PROGRAM2+0
-;MyProject.mbas,687 :: 		PROGRAM6(k,dl2)
+;MyProject.mbas,611 :: 		PROGRAM6(k,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM6+0
-;MyProject.mbas,691 :: 		PROGRAM12(K,dl2)
+;MyProject.mbas,615 :: 		PROGRAM12(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
@@ -2576,72 +2292,72 @@ L__loop22177:
 	CALL       _PROGRAM12+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,693 :: 		K=K+3
+;MyProject.mbas,617 :: 		K=K+3
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	SUBI       R16, 253
 	SBCI       R17, 255
 	STS        _K+0, R16
 	STS        _K+1, R17
-;MyProject.mbas,694 :: 		kk=kk - 3
+;MyProject.mbas,618 :: 		kk=kk - 3
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 3
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,699 :: 		if mode<>2 then
+;MyProject.mbas,623 :: 		if mode<>2 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop22375
+	BRNE       L__loop22337
 	CPI        R16, 2
-L__loop22375:
-	BRNE       L__loop22376
-	JMP        L__loop22183
-L__loop22376:
-;MyProject.mbas,700 :: 		break
-	JMP        L__loop22179
-L__loop22183:
-;MyProject.mbas,702 :: 		loop until K >= 255
+L__loop22337:
+	BRNE       L__loop22338
+	JMP        L__loop22162
+L__loop22338:
+;MyProject.mbas,624 :: 		break
+	JMP        L__loop22158
+L__loop22162:
+;MyProject.mbas,626 :: 		loop until K >= 255
 	LDS        R18, _K+0
 	LDS        R19, _K+1
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop22377
-	JMP        L__loop22180
-L__loop22377:
-	JMP        L__loop22177
-L__loop22180:
-L__loop22179:
-;MyProject.mbas,703 :: 		K=170
+	BRLT       L__loop22339
+	JMP        L__loop22159
+L__loop22339:
+	JMP        L__loop22156
+L__loop22159:
+L__loop22158:
+;MyProject.mbas,627 :: 		K=170
 	LDI        R27, 170
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,704 :: 		kk=255-170
+;MyProject.mbas,628 :: 		kk=255-170
 	LDI        R27, 85
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,705 :: 		do
-L__loop22185:
-;MyProject.mbas,706 :: 		if mode<>2 then
+;MyProject.mbas,629 :: 		do
+L__loop22164:
+;MyProject.mbas,630 :: 		if mode<>2 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop22378
+	BRNE       L__loop22340
 	CPI        R16, 2
-L__loop22378:
-	BRNE       L__loop22379
-	JMP        L__loop22191
-L__loop22379:
-;MyProject.mbas,707 :: 		break
-	JMP        L__loop22187
-L__loop22191:
-;MyProject.mbas,710 :: 		PROGRAM9(K,dl2)
+L__loop22340:
+	BRNE       L__loop22341
+	JMP        L__loop22170
+L__loop22341:
+;MyProject.mbas,631 :: 		break
+	JMP        L__loop22166
+L__loop22170:
+;MyProject.mbas,634 :: 		PROGRAM9(K,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2651,7 +2367,7 @@ L__loop22191:
 	CALL       _PROGRAM9+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,719 :: 		K=K+1
+;MyProject.mbas,643 :: 		K=K+1
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -2659,50 +2375,50 @@ L__loop22191:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,720 :: 		kk=kk - 1
+;MyProject.mbas,644 :: 		kk=kk - 1
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,722 :: 		loop until K >= 255
+;MyProject.mbas,646 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop22380
-	JMP        L__loop22188
-L__loop22380:
-	JMP        L__loop22185
-L__loop22188:
-L__loop22187:
-;MyProject.mbas,723 :: 		K=190
+	BRLT       L__loop22342
+	JMP        L__loop22167
+L__loop22342:
+	JMP        L__loop22164
+L__loop22167:
+L__loop22166:
+;MyProject.mbas,647 :: 		K=190
 	LDI        R27, 190
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,724 :: 		kk=255-190
+;MyProject.mbas,648 :: 		kk=255-190
 	LDI        R27, 65
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,725 :: 		do
-L__loop22193:
-;MyProject.mbas,726 :: 		if mode<>2 then
+;MyProject.mbas,649 :: 		do
+L__loop22172:
+;MyProject.mbas,650 :: 		if mode<>2 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop22381
+	BRNE       L__loop22343
 	CPI        R16, 2
-L__loop22381:
-	BRNE       L__loop22382
-	JMP        L__loop22199
-L__loop22382:
-;MyProject.mbas,727 :: 		break
-	JMP        L__loop22195
-L__loop22199:
-;MyProject.mbas,739 :: 		PROGRAM11(K,dl2)
+L__loop22343:
+	BRNE       L__loop22344
+	JMP        L__loop22178
+L__loop22344:
+;MyProject.mbas,651 :: 		break
+	JMP        L__loop22174
+L__loop22178:
+;MyProject.mbas,663 :: 		PROGRAM11(K,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2712,7 +2428,7 @@ L__loop22199:
 	CALL       _PROGRAM11+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,740 :: 		K=K+10
+;MyProject.mbas,664 :: 		K=K+10
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -2720,50 +2436,50 @@ L__loop22199:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,741 :: 		kk=kk - 10
+;MyProject.mbas,665 :: 		kk=kk - 10
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 10
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,742 :: 		loop until K >= 255
+;MyProject.mbas,666 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop22383
-	JMP        L__loop22196
-L__loop22383:
-	JMP        L__loop22193
-L__loop22196:
-L__loop22195:
-;MyProject.mbas,743 :: 		K=180
+	BRLT       L__loop22345
+	JMP        L__loop22175
+L__loop22345:
+	JMP        L__loop22172
+L__loop22175:
+L__loop22174:
+;MyProject.mbas,667 :: 		K=180
 	LDI        R27, 180
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,744 :: 		kk=255-180
+;MyProject.mbas,668 :: 		kk=255-180
 	LDI        R27, 75
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,745 :: 		do
-L__loop22201:
-;MyProject.mbas,746 :: 		if mode<>2 then
+;MyProject.mbas,669 :: 		do
+L__loop22180:
+;MyProject.mbas,670 :: 		if mode<>2 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop22384
+	BRNE       L__loop22346
 	CPI        R16, 2
-L__loop22384:
-	BRNE       L__loop22385
-	JMP        L__loop22207
-L__loop22385:
-;MyProject.mbas,747 :: 		break
-	JMP        L__loop22203
-L__loop22207:
-;MyProject.mbas,750 :: 		PROGRAM1(k,dl2)
+L__loop22346:
+	BRNE       L__loop22347
+	JMP        L__loop22186
+L__loop22347:
+;MyProject.mbas,671 :: 		break
+	JMP        L__loop22182
+L__loop22186:
+;MyProject.mbas,674 :: 		PROGRAM1(k,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2771,25 +2487,25 @@ L__loop22207:
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM1+0
-;MyProject.mbas,752 :: 		PROGRAM2(kk,dl2)
+;MyProject.mbas,676 :: 		PROGRAM2(kk,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _kk+0
 	LDS        R3, _kk+1
 	CALL       _PROGRAM2+0
-;MyProject.mbas,754 :: 		PROGRAM10(K,dl2)
+;MyProject.mbas,678 :: 		PROGRAM10(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM10+0
-;MyProject.mbas,756 :: 		PROGRAM6(k,dl2)
+;MyProject.mbas,680 :: 		PROGRAM6(k,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM6+0
-;MyProject.mbas,758 :: 		PROGRAM8(K,dl2)
+;MyProject.mbas,682 :: 		PROGRAM8(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
@@ -2797,7 +2513,7 @@ L__loop22207:
 	CALL       _PROGRAM8+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,760 :: 		K=K+1
+;MyProject.mbas,684 :: 		K=K+1
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -2805,25 +2521,25 @@ L__loop22207:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,761 :: 		kk=kk - 1
+;MyProject.mbas,685 :: 		kk=kk - 1
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,763 :: 		loop until K >= 255
+;MyProject.mbas,687 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop22386
-	JMP        L__loop22204
-L__loop22386:
-	JMP        L__loop22201
-L__loop22204:
-L__loop22203:
-;MyProject.mbas,765 :: 		end sub
+	BRLT       L__loop22348
+	JMP        L__loop22183
+L__loop22348:
+	JMP        L__loop22180
+L__loop22183:
+L__loop22182:
+;MyProject.mbas,689 :: 		end sub
 L_end_loop22:
 	POP        R5
 	POP        R4
@@ -2832,20 +2548,20 @@ L_end_loop22:
 
 _loop33:
 
-;MyProject.mbas,768 :: 		sub procedure loop33(dim k2 as integer)
-;MyProject.mbas,769 :: 		K=k2
+;MyProject.mbas,692 :: 		sub procedure loop33(dim k2 as integer)
+;MyProject.mbas,693 :: 		K=k2
 	PUSH       R4
 	PUSH       R5
 	STS        _K+0, R2
 	STS        _K+1, R3
-;MyProject.mbas,771 :: 		kk=255
+;MyProject.mbas,695 :: 		kk=255
 	LDI        R27, 255
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,774 :: 		do
-L__loop33210:
-;MyProject.mbas,785 :: 		PROGRAM12(K,dl2)
+;MyProject.mbas,698 :: 		do
+L__loop33189:
+;MyProject.mbas,709 :: 		PROGRAM12(K,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2855,72 +2571,72 @@ L__loop33210:
 	CALL       _PROGRAM12+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,787 :: 		K=K+3
+;MyProject.mbas,711 :: 		K=K+3
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	SUBI       R16, 253
 	SBCI       R17, 255
 	STS        _K+0, R16
 	STS        _K+1, R17
-;MyProject.mbas,788 :: 		kk=kk - 3
+;MyProject.mbas,712 :: 		kk=kk - 3
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 3
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,793 :: 		if mode<>2 then
+;MyProject.mbas,717 :: 		if mode<>2 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop33388
+	BRNE       L__loop33350
 	CPI        R16, 2
-L__loop33388:
-	BRNE       L__loop33389
-	JMP        L__loop33216
-L__loop33389:
-;MyProject.mbas,794 :: 		break
-	JMP        L__loop33212
-L__loop33216:
-;MyProject.mbas,796 :: 		loop until K >= 255
+L__loop33350:
+	BRNE       L__loop33351
+	JMP        L__loop33195
+L__loop33351:
+;MyProject.mbas,718 :: 		break
+	JMP        L__loop33191
+L__loop33195:
+;MyProject.mbas,720 :: 		loop until K >= 255
 	LDS        R18, _K+0
 	LDS        R19, _K+1
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop33390
-	JMP        L__loop33213
-L__loop33390:
-	JMP        L__loop33210
-L__loop33213:
-L__loop33212:
-;MyProject.mbas,797 :: 		K=170
+	BRLT       L__loop33352
+	JMP        L__loop33192
+L__loop33352:
+	JMP        L__loop33189
+L__loop33192:
+L__loop33191:
+;MyProject.mbas,721 :: 		K=170
 	LDI        R27, 170
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,798 :: 		kk=255-170
+;MyProject.mbas,722 :: 		kk=255-170
 	LDI        R27, 85
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,799 :: 		do
-L__loop33218:
-;MyProject.mbas,800 :: 		if mode<>3 then
+;MyProject.mbas,723 :: 		do
+L__loop33197:
+;MyProject.mbas,724 :: 		if mode<>3 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop33391
+	BRNE       L__loop33353
 	CPI        R16, 3
-L__loop33391:
-	BRNE       L__loop33392
-	JMP        L__loop33224
-L__loop33392:
-;MyProject.mbas,801 :: 		break
-	JMP        L__loop33220
-L__loop33224:
-;MyProject.mbas,804 :: 		PROGRAM9(K,dl2)
+L__loop33353:
+	BRNE       L__loop33354
+	JMP        L__loop33203
+L__loop33354:
+;MyProject.mbas,725 :: 		break
+	JMP        L__loop33199
+L__loop33203:
+;MyProject.mbas,728 :: 		PROGRAM9(K,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2930,7 +2646,7 @@ L__loop33224:
 	CALL       _PROGRAM9+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,813 :: 		K=K+1
+;MyProject.mbas,737 :: 		K=K+1
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -2938,50 +2654,50 @@ L__loop33224:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,814 :: 		kk=kk - 1
+;MyProject.mbas,738 :: 		kk=kk - 1
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,816 :: 		loop until K >= 255
+;MyProject.mbas,740 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop33393
-	JMP        L__loop33221
-L__loop33393:
-	JMP        L__loop33218
-L__loop33221:
-L__loop33220:
-;MyProject.mbas,817 :: 		K=190
+	BRLT       L__loop33355
+	JMP        L__loop33200
+L__loop33355:
+	JMP        L__loop33197
+L__loop33200:
+L__loop33199:
+;MyProject.mbas,741 :: 		K=190
 	LDI        R27, 190
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,818 :: 		kk=255-k
+;MyProject.mbas,742 :: 		kk=255-k
 	LDI        R27, 65
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,819 :: 		do
-L__loop33226:
-;MyProject.mbas,820 :: 		if mode<>3 then
+;MyProject.mbas,743 :: 		do
+L__loop33205:
+;MyProject.mbas,744 :: 		if mode<>3 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop33394
+	BRNE       L__loop33356
 	CPI        R16, 3
-L__loop33394:
-	BRNE       L__loop33395
-	JMP        L__loop33232
-L__loop33395:
-;MyProject.mbas,821 :: 		break
-	JMP        L__loop33228
-L__loop33232:
-;MyProject.mbas,833 :: 		PROGRAM11(K,dl2)
+L__loop33356:
+	BRNE       L__loop33357
+	JMP        L__loop33211
+L__loop33357:
+;MyProject.mbas,745 :: 		break
+	JMP        L__loop33207
+L__loop33211:
+;MyProject.mbas,757 :: 		PROGRAM11(K,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -2991,7 +2707,7 @@ L__loop33232:
 	CALL       _PROGRAM11+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,834 :: 		K=K+10
+;MyProject.mbas,758 :: 		K=K+10
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -2999,50 +2715,50 @@ L__loop33232:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,835 :: 		kk=kk - 10
+;MyProject.mbas,759 :: 		kk=kk - 10
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 10
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,836 :: 		loop until K >= 255
+;MyProject.mbas,760 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop33396
-	JMP        L__loop33229
-L__loop33396:
-	JMP        L__loop33226
-L__loop33229:
-L__loop33228:
-;MyProject.mbas,837 :: 		K=180
+	BRLT       L__loop33358
+	JMP        L__loop33208
+L__loop33358:
+	JMP        L__loop33205
+L__loop33208:
+L__loop33207:
+;MyProject.mbas,761 :: 		K=180
 	LDI        R27, 180
 	STS        _K+0, R27
 	LDI        R27, 0
 	STS        _K+1, R27
-;MyProject.mbas,838 :: 		kk=255-k
+;MyProject.mbas,762 :: 		kk=255-k
 	LDI        R27, 75
 	STS        _kk+0, R27
 	LDI        R27, 0
 	STS        _kk+1, R27
-;MyProject.mbas,839 :: 		do
-L__loop33234:
-;MyProject.mbas,840 :: 		if mode<>3 then
+;MyProject.mbas,763 :: 		do
+L__loop33213:
+;MyProject.mbas,764 :: 		if mode<>3 then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__loop33397
+	BRNE       L__loop33359
 	CPI        R16, 3
-L__loop33397:
-	BRNE       L__loop33398
-	JMP        L__loop33240
-L__loop33398:
-;MyProject.mbas,841 :: 		break
-	JMP        L__loop33236
-L__loop33240:
-;MyProject.mbas,844 :: 		PROGRAM1(k,dl2)
+L__loop33359:
+	BRNE       L__loop33360
+	JMP        L__loop33219
+L__loop33360:
+;MyProject.mbas,765 :: 		break
+	JMP        L__loop33215
+L__loop33219:
+;MyProject.mbas,768 :: 		PROGRAM1(k,dl2)
 	PUSH       R3
 	PUSH       R2
 	LDS        R4, _dl2+0
@@ -3050,25 +2766,25 @@ L__loop33240:
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM1+0
-;MyProject.mbas,846 :: 		PROGRAM2(kk,dl2)
+;MyProject.mbas,770 :: 		PROGRAM2(kk,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _kk+0
 	LDS        R3, _kk+1
 	CALL       _PROGRAM2+0
-;MyProject.mbas,848 :: 		PROGRAM10(K,dl2)
+;MyProject.mbas,772 :: 		PROGRAM10(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM10+0
-;MyProject.mbas,850 :: 		PROGRAM6(k,dl2)
+;MyProject.mbas,774 :: 		PROGRAM6(k,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _PROGRAM6+0
-;MyProject.mbas,852 :: 		PROGRAM8(K,dl2)
+;MyProject.mbas,776 :: 		PROGRAM8(K,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	LDS        R2, _K+0
@@ -3076,7 +2792,7 @@ L__loop33240:
 	CALL       _PROGRAM8+0
 	POP        R2
 	POP        R3
-;MyProject.mbas,854 :: 		K=K+1
+;MyProject.mbas,778 :: 		K=K+1
 	LDS        R16, _K+0
 	LDS        R17, _K+1
 	MOVW       R18, R16
@@ -3084,25 +2800,25 @@ L__loop33240:
 	SBCI       R19, 255
 	STS        _K+0, R18
 	STS        _K+1, R19
-;MyProject.mbas,855 :: 		kk=kk - 1
+;MyProject.mbas,779 :: 		kk=kk - 1
 	LDS        R16, _kk+0
 	LDS        R17, _kk+1
 	SUBI       R16, 1
 	SBCI       R17, 0
 	STS        _kk+0, R16
 	STS        _kk+1, R17
-;MyProject.mbas,857 :: 		loop until K >= 255
+;MyProject.mbas,781 :: 		loop until K >= 255
 	LDI        R16, 255
 	LDI        R17, 0
 	CP         R18, R16
 	CPC        R19, R17
-	BRLT       L__loop33399
-	JMP        L__loop33237
-L__loop33399:
-	JMP        L__loop33234
-L__loop33237:
-L__loop33236:
-;MyProject.mbas,859 :: 		end sub
+	BRLT       L__loop33361
+	JMP        L__loop33216
+L__loop33361:
+	JMP        L__loop33213
+L__loop33216:
+L__loop33215:
+;MyProject.mbas,783 :: 		end sub
 L_end_loop33:
 	POP        R5
 	POP        R4
@@ -3124,8 +2840,8 @@ _interrupt_ISR:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,862 :: 		sub procedure interrupt_ISR () org IVT_ADDR_INT0            ''// Interrupt rutine
-;MyProject.mbas,865 :: 		SREG_I_bit = 0                                   '' // Disable Interrupts
+;MyProject.mbas,786 :: 		sub procedure interrupt_ISR () org IVT_ADDR_INT0            ''// Interrupt rutine
+;MyProject.mbas,789 :: 		SREG_I_bit = 0                                   '' // Disable Interrupts
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
@@ -3134,19 +2850,19 @@ _interrupt_ISR:
 	IN         R27, SREG_I_bit+0
 	CBR        R27, BitMask(SREG_I_bit+0)
 	OUT        SREG_I_bit+0, R27
-;MyProject.mbas,868 :: 		INTF0_bit=0                                                  '  // Clear interrupt flag
+;MyProject.mbas,792 :: 		INTF0_bit=0                                                  '  // Clear interrupt flag
 	IN         R27, INTF0_bit+0
 	CBR        R27, BitMask(INTF0_bit+0)
 	OUT        INTF0_bit+0, R27
-;MyProject.mbas,869 :: 		INT0_bit = 0
+;MyProject.mbas,793 :: 		INT0_bit = 0
 	IN         R27, INT0_bit+0
 	CBR        R27, BitMask(INT0_bit+0)
 	OUT        INT0_bit+0, R27
-;MyProject.mbas,870 :: 		oldstate_3=0
+;MyProject.mbas,794 :: 		oldstate_3=0
 	LDS        R27, _oldstate_3+0
 	CBR        R27, BitMask(_oldstate_3+0)
 	STS        _oldstate_3+0, R27
-;MyProject.mbas,871 :: 		if (Button(PORTD, 2, 0.1, 0)) then    ' Detect logical one up key
+;MyProject.mbas,795 :: 		if (Button(PORTD, 2, 0.1, 0)) then    ' Detect logical one up key
 	CLR        R6
 	CLR        R5
 	LDI        R27, 2
@@ -3157,15 +2873,15 @@ _interrupt_ISR:
 	MOV        R3, R27
 	CALL       _Button+0
 	TST        R16
-	BRNE       L__interrupt_ISR401
-	JMP        L__interrupt_ISR244
-L__interrupt_ISR401:
-;MyProject.mbas,872 :: 		oldstate_3 = 1                      ' Update flag
+	BRNE       L__interrupt_ISR363
+	JMP        L__interrupt_ISR223
+L__interrupt_ISR363:
+;MyProject.mbas,796 :: 		oldstate_3 = 1                      ' Update flag
 	LDS        R27, _oldstate_3+0
 	SBR        R27, BitMask(_oldstate_3+0)
 	STS        _oldstate_3+0, R27
-L__interrupt_ISR244:
-;MyProject.mbas,874 :: 		if (oldstate_3 and Button(PIND, 2,0.1, 1)) then
+L__interrupt_ISR223:
+;MyProject.mbas,798 :: 		if (oldstate_3 and Button(PIND, 2,0.1, 1)) then
 	LDI        R27, 1
 	MOV        R6, R27
 	CLR        R5
@@ -3181,49 +2897,49 @@ L__interrupt_ISR244:
 	SBRC       R0, BitPos(_oldstate_3+0)
 	INC        R17
 	AND        R16, R17
-	BRNE       L__interrupt_ISR402
-	JMP        L__interrupt_ISR247
-L__interrupt_ISR402:
-;MyProject.mbas,875 :: 		if (mode=4) then
+	BRNE       L__interrupt_ISR364
+	JMP        L__interrupt_ISR226
+L__interrupt_ISR364:
+;MyProject.mbas,799 :: 		if (mode=4) then
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__interrupt_ISR403
+	BRNE       L__interrupt_ISR365
 	CPI        R16, 4
-L__interrupt_ISR403:
-	BREQ       L__interrupt_ISR404
-	JMP        L__interrupt_ISR250
-L__interrupt_ISR404:
-;MyProject.mbas,876 :: 		mode=1
+L__interrupt_ISR365:
+	BREQ       L__interrupt_ISR366
+	JMP        L__interrupt_ISR229
+L__interrupt_ISR366:
+;MyProject.mbas,800 :: 		mode=1
 	LDI        R27, 1
 	STS        _mode+0, R27
 	LDI        R27, 0
 	STS        _mode+1, R27
-	JMP        L__interrupt_ISR251
-;MyProject.mbas,877 :: 		else
-L__interrupt_ISR250:
-;MyProject.mbas,878 :: 		mode=mode+1
+	JMP        L__interrupt_ISR230
+;MyProject.mbas,801 :: 		else
+L__interrupt_ISR229:
+;MyProject.mbas,802 :: 		mode=mode+1
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	SUBI       R16, 255
 	SBCI       R17, 255
 	STS        _mode+0, R16
 	STS        _mode+1, R17
-;MyProject.mbas,879 :: 		end if
-L__interrupt_ISR251:
-;MyProject.mbas,881 :: 		case 1
+;MyProject.mbas,803 :: 		end if
+L__interrupt_ISR230:
+;MyProject.mbas,805 :: 		case 1
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__interrupt_ISR405
+	BRNE       L__interrupt_ISR367
 	CPI        R16, 1
-L__interrupt_ISR405:
-	BREQ       L__interrupt_ISR406
-	JMP        L__interrupt_ISR255
-L__interrupt_ISR406:
-;MyProject.mbas,882 :: 		Lcd_0()
+L__interrupt_ISR367:
+	BREQ       L__interrupt_ISR368
+	JMP        L__interrupt_ISR234
+L__interrupt_ISR368:
+;MyProject.mbas,806 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,883 :: 		inttostr(mode,txt)
+;MyProject.mbas,807 :: 		inttostr(mode,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3231,7 +2947,7 @@ L__interrupt_ISR406:
 	LDS        R2, _mode+0
 	LDS        R3, _mode+1
 	CALL       _IntToStr+0
-;MyProject.mbas,884 :: 		LCD_Out(2,9, txt)  ''Show on LCD
+;MyProject.mbas,808 :: 		LCD_Out(2,9, txt)  ''Show on LCD
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3241,7 +2957,7 @@ L__interrupt_ISR406:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,885 :: 		LCD_Out(1,1, "Mode : Dancing")  ''Show on LCD
+;MyProject.mbas,809 :: 		LCD_Out(1,1, "Mode : Dancing")  ''Show on LCD
 	MOVW       R30, R28
 	LDI        R27, 77
 	ST         Z+, R27
@@ -3280,32 +2996,32 @@ L__interrupt_ISR406:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,886 :: 		Delay_mS(100)
-	LDI        R18, 3
-	LDI        R17, 8
-	LDI        R16, 120
-L__interrupt_ISR256:
+;MyProject.mbas,810 :: 		Delay_mS(100)
+	LDI        R18, 5
+	LDI        R17, 15
+	LDI        R16, 242
+L__interrupt_ISR235:
 	DEC        R16
-	BRNE       L__interrupt_ISR256
+	BRNE       L__interrupt_ISR235
 	DEC        R17
-	BRNE       L__interrupt_ISR256
+	BRNE       L__interrupt_ISR235
 	DEC        R18
-	BRNE       L__interrupt_ISR256
-	JMP        L__interrupt_ISR252
-L__interrupt_ISR255:
-;MyProject.mbas,887 :: 		case 2
+	BRNE       L__interrupt_ISR235
+	JMP        L__interrupt_ISR231
+L__interrupt_ISR234:
+;MyProject.mbas,811 :: 		case 2
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__interrupt_ISR407
+	BRNE       L__interrupt_ISR369
 	CPI        R16, 2
-L__interrupt_ISR407:
-	BREQ       L__interrupt_ISR408
-	JMP        L__interrupt_ISR260
-L__interrupt_ISR408:
-;MyProject.mbas,888 :: 		Lcd_0()
+L__interrupt_ISR369:
+	BREQ       L__interrupt_ISR370
+	JMP        L__interrupt_ISR239
+L__interrupt_ISR370:
+;MyProject.mbas,812 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,889 :: 		inttostr(mode,txt)
+;MyProject.mbas,813 :: 		inttostr(mode,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3313,7 +3029,7 @@ L__interrupt_ISR408:
 	LDS        R2, _mode+0
 	LDS        R3, _mode+1
 	CALL       _IntToStr+0
-;MyProject.mbas,890 :: 		LCD_Out(2,9, txt)  ''Show on LCD
+;MyProject.mbas,814 :: 		LCD_Out(2,9, txt)  ''Show on LCD
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3323,7 +3039,7 @@ L__interrupt_ISR408:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,891 :: 		LCD_Out(1,1, "Mode : Clasic")  ''Show on LCD
+;MyProject.mbas,815 :: 		LCD_Out(1,1, "Mode : Clasic")  ''Show on LCD
 	MOVW       R30, R28
 	LDI        R27, 77
 	ST         Z+, R27
@@ -3360,32 +3076,32 @@ L__interrupt_ISR408:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,892 :: 		Delay_mS(100)
-	LDI        R18, 3
-	LDI        R17, 8
-	LDI        R16, 120
-L__interrupt_ISR261:
+;MyProject.mbas,816 :: 		Delay_mS(100)
+	LDI        R18, 5
+	LDI        R17, 15
+	LDI        R16, 242
+L__interrupt_ISR240:
 	DEC        R16
-	BRNE       L__interrupt_ISR261
+	BRNE       L__interrupt_ISR240
 	DEC        R17
-	BRNE       L__interrupt_ISR261
+	BRNE       L__interrupt_ISR240
 	DEC        R18
-	BRNE       L__interrupt_ISR261
-	JMP        L__interrupt_ISR252
-L__interrupt_ISR260:
-;MyProject.mbas,893 :: 		case 3
+	BRNE       L__interrupt_ISR240
+	JMP        L__interrupt_ISR231
+L__interrupt_ISR239:
+;MyProject.mbas,817 :: 		case 3
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__interrupt_ISR409
+	BRNE       L__interrupt_ISR371
 	CPI        R16, 3
-L__interrupt_ISR409:
-	BREQ       L__interrupt_ISR410
-	JMP        L__interrupt_ISR265
-L__interrupt_ISR410:
-;MyProject.mbas,894 :: 		Lcd_0()
+L__interrupt_ISR371:
+	BREQ       L__interrupt_ISR372
+	JMP        L__interrupt_ISR244
+L__interrupt_ISR372:
+;MyProject.mbas,818 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,895 :: 		inttostr(mode,txt)
+;MyProject.mbas,819 :: 		inttostr(mode,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3393,7 +3109,7 @@ L__interrupt_ISR410:
 	LDS        R2, _mode+0
 	LDS        R3, _mode+1
 	CALL       _IntToStr+0
-;MyProject.mbas,896 :: 		LCD_Out(2,9, txt)  ''Show on LCD
+;MyProject.mbas,820 :: 		LCD_Out(2,9, txt)  ''Show on LCD
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3403,7 +3119,7 @@ L__interrupt_ISR410:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,897 :: 		LCD_Out(1,1, "Mode : warm")  ''Show on LCD
+;MyProject.mbas,821 :: 		LCD_Out(1,1, "Mode : warm")  ''Show on LCD
 	MOVW       R30, R28
 	LDI        R27, 77
 	ST         Z+, R27
@@ -3436,32 +3152,32 @@ L__interrupt_ISR410:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,898 :: 		Delay_mS(100)
-	LDI        R18, 3
-	LDI        R17, 8
-	LDI        R16, 120
-L__interrupt_ISR266:
+;MyProject.mbas,822 :: 		Delay_mS(100)
+	LDI        R18, 5
+	LDI        R17, 15
+	LDI        R16, 242
+L__interrupt_ISR245:
 	DEC        R16
-	BRNE       L__interrupt_ISR266
+	BRNE       L__interrupt_ISR245
 	DEC        R17
-	BRNE       L__interrupt_ISR266
+	BRNE       L__interrupt_ISR245
 	DEC        R18
-	BRNE       L__interrupt_ISR266
-	JMP        L__interrupt_ISR252
-L__interrupt_ISR265:
-;MyProject.mbas,900 :: 		case 4
+	BRNE       L__interrupt_ISR245
+	JMP        L__interrupt_ISR231
+L__interrupt_ISR244:
+;MyProject.mbas,824 :: 		case 4
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__interrupt_ISR411
+	BRNE       L__interrupt_ISR373
 	CPI        R16, 4
-L__interrupt_ISR411:
-	BREQ       L__interrupt_ISR412
-	JMP        L__interrupt_ISR270
-L__interrupt_ISR412:
-;MyProject.mbas,901 :: 		Lcd_0()
+L__interrupt_ISR373:
+	BREQ       L__interrupt_ISR374
+	JMP        L__interrupt_ISR249
+L__interrupt_ISR374:
+;MyProject.mbas,825 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,902 :: 		inttostr(mode,txt)
+;MyProject.mbas,826 :: 		inttostr(mode,txt)
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3469,7 +3185,7 @@ L__interrupt_ISR412:
 	LDS        R2, _mode+0
 	LDS        R3, _mode+1
 	CALL       _IntToStr+0
-;MyProject.mbas,903 :: 		LCD_Out(2,9, txt)  ''Show on LCD
+;MyProject.mbas,827 :: 		LCD_Out(2,9, txt)  ''Show on LCD
 	LDI        R27, #lo_addr(_txt+0)
 	MOV        R4, R27
 	LDI        R27, hi_addr(_txt+0)
@@ -3479,7 +3195,7 @@ L__interrupt_ISR412:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,904 :: 		LCD_Out(1,1, "Mode : echolazier")  ''Show on LCD
+;MyProject.mbas,828 :: 		LCD_Out(1,1, "Mode : echolazier")  ''Show on LCD
 	MOVW       R30, R28
 	LDI        R27, 77
 	ST         Z+, R27
@@ -3524,31 +3240,31 @@ L__interrupt_ISR412:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,905 :: 		Delay_mS(100)
-	LDI        R18, 3
-	LDI        R17, 8
-	LDI        R16, 120
-L__interrupt_ISR271:
+;MyProject.mbas,829 :: 		Delay_mS(100)
+	LDI        R18, 5
+	LDI        R17, 15
+	LDI        R16, 242
+L__interrupt_ISR250:
 	DEC        R16
-	BRNE       L__interrupt_ISR271
+	BRNE       L__interrupt_ISR250
 	DEC        R17
-	BRNE       L__interrupt_ISR271
+	BRNE       L__interrupt_ISR250
 	DEC        R18
-	BRNE       L__interrupt_ISR271
-	JMP        L__interrupt_ISR252
-L__interrupt_ISR270:
-L__interrupt_ISR252:
-;MyProject.mbas,907 :: 		end select
-L__interrupt_ISR247:
-;MyProject.mbas,910 :: 		INT0_bit = 1
+	BRNE       L__interrupt_ISR250
+	JMP        L__interrupt_ISR231
+L__interrupt_ISR249:
+L__interrupt_ISR231:
+;MyProject.mbas,831 :: 		end select
+L__interrupt_ISR226:
+;MyProject.mbas,834 :: 		INT0_bit = 1
 	IN         R27, INT0_bit+0
 	SBR        R27, BitMask(INT0_bit+0)
 	OUT        INT0_bit+0, R27
-;MyProject.mbas,912 :: 		SREG_I_bit = 1
+;MyProject.mbas,836 :: 		SREG_I_bit = 1
 	IN         R27, SREG_I_bit+0
 	SBR        R27, BitMask(SREG_I_bit+0)
 	OUT        SREG_I_bit+0, R27
-;MyProject.mbas,914 :: 		end sub
+;MyProject.mbas,838 :: 		end sub
 L_end_interrupt_ISR:
 	POP        R6
 	POP        R5
@@ -3575,15 +3291,15 @@ _Timer0Overflow_ISR:
 	IN         R27, SREG+0
 	PUSH       R27
 
-;MyProject.mbas,918 :: 		dim counter as byte
-;MyProject.mbas,926 :: 		WHILE TRUE
-L__Timer0Overflow_ISR275:
-;MyProject.mbas,928 :: 		PORTB= 0X00
+;MyProject.mbas,842 :: 		dim counter as byte
+;MyProject.mbas,850 :: 		WHILE TRUE
+L__Timer0Overflow_ISR254:
+;MyProject.mbas,852 :: 		PORTB= 0X00
 	LDI        R27, 0
 	OUT        PORTB+0, R27
-;MyProject.mbas,929 :: 		WEND
-	JMP        L__Timer0Overflow_ISR275
-;MyProject.mbas,930 :: 		end sub
+;MyProject.mbas,853 :: 		WEND
+	JMP        L__Timer0Overflow_ISR254
+;MyProject.mbas,854 :: 		end sub
 L_end_Timer0Overflow_ISR:
 	POP        R27
 	OUT        SREG+0, R27
@@ -3605,22 +3321,22 @@ _main:
 	OUT        SPL+1, R29
 	ADIW       R28, 1
 
-;MyProject.mbas,933 :: 		main:
-;MyProject.mbas,934 :: 		Lcd_Init()
+;MyProject.mbas,857 :: 		main:
+;MyProject.mbas,858 :: 		Lcd_Init()
 	PUSH       R2
 	PUSH       R3
 	PUSH       R4
 	PUSH       R5
 	CALL       _Lcd_Init+0
-;MyProject.mbas,935 :: 		Lcd_Cmd(_LCD_CLEAR)               ' Clear display
+;MyProject.mbas,859 :: 		Lcd_Cmd(_LCD_CLEAR)               ' Clear display
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Cmd+0
-;MyProject.mbas,936 :: 		Lcd_Cmd(_LCD_CURSOR_OFF)
+;MyProject.mbas,860 :: 		Lcd_Cmd(_LCD_CURSOR_OFF)
 	LDI        R27, 12
 	MOV        R2, R27
 	CALL       _Lcd_Cmd+0
-;MyProject.mbas,937 :: 		Lcd_Out(1,1,"Waiting For ")
+;MyProject.mbas,861 :: 		Lcd_Out(1,1,"Waiting For ")
 	MOVW       R30, R28
 	LDI        R27, 87
 	ST         Z+, R27
@@ -3655,7 +3371,7 @@ _main:
 	LDI        R27, 1
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,938 :: 		Lcd_Out(2,1,"To Be Pressed")
+;MyProject.mbas,862 :: 		Lcd_Out(2,1,"To Be Pressed")
 	MOVW       R30, R28
 	LDI        R27, 84
 	ST         Z+, R27
@@ -3692,122 +3408,122 @@ _main:
 	LDI        R27, 2
 	MOV        R2, R27
 	CALL       _Lcd_Out+0
-;MyProject.mbas,939 :: 		PWM_Initialize ()
+;MyProject.mbas,863 :: 		PWM_Initialize ()
 	CALL       _PWM_Initialize+0
-;MyProject.mbas,940 :: 		DDD2_bit = 0                                        ' set Button pin as input
+;MyProject.mbas,864 :: 		DDD2_bit = 0                                        ' set Button pin as input
 	IN         R27, DDD2_bit+0
 	CBR        R27, BitMask(DDD2_bit+0)
 	OUT        DDD2_bit+0, R27
-;MyProject.mbas,942 :: 		ISC00_bit = 1                                    '' // Set interrupts to be detected on rising edge
+;MyProject.mbas,866 :: 		ISC00_bit = 1                                    '' // Set interrupts to be detected on rising edge
 	IN         R27, ISC00_bit+0
 	SBR        R27, BitMask(ISC00_bit+0)
 	OUT        ISC00_bit+0, R27
-;MyProject.mbas,944 :: 		SREG_I_bit = 0
+;MyProject.mbas,868 :: 		SREG_I_bit = 0
 	IN         R27, SREG_I_bit+0
 	CBR        R27, BitMask(SREG_I_bit+0)
 	OUT        SREG_I_bit+0, R27
-;MyProject.mbas,946 :: 		SREG_I_bit = 1
+;MyProject.mbas,870 :: 		SREG_I_bit = 1
 	IN         R27, SREG_I_bit+0
 	SBR        R27, BitMask(SREG_I_bit+0)
 	OUT        SREG_I_bit+0, R27
-;MyProject.mbas,948 :: 		INT0_bit = 1
+;MyProject.mbas,872 :: 		INT0_bit = 1
 	IN         R27, INT0_bit+0
 	SBR        R27, BitMask(INT0_bit+0)
 	OUT        INT0_bit+0, R27
-;MyProject.mbas,951 :: 		mode=1
+;MyProject.mbas,875 :: 		mode=1
 	LDI        R27, 1
 	STS        _mode+0, R27
 	LDI        R27, 0
 	STS        _mode+1, R27
-;MyProject.mbas,957 :: 		while TRUE
-L__main281:
-;MyProject.mbas,964 :: 		case 1
+;MyProject.mbas,881 :: 		while TRUE
+L__main260:
+;MyProject.mbas,888 :: 		case 1
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__main415
+	BRNE       L__main377
 	CPI        R16, 1
-L__main415:
-	BREQ       L__main416
-	JMP        L__main288
-L__main416:
-;MyProject.mbas,965 :: 		K=0
+L__main377:
+	BREQ       L__main378
+	JMP        L__main267
+L__main378:
+;MyProject.mbas,889 :: 		K=0
 	LDI        R27, 0
 	STS        _K+0, R27
 	STS        _K+1, R27
-;MyProject.mbas,966 :: 		Lcd_0()
+;MyProject.mbas,890 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,967 :: 		LOOP11(k)
+;MyProject.mbas,891 :: 		LOOP11(k)
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _LOOP11+0
-	JMP        L__main285
-L__main288:
-;MyProject.mbas,968 :: 		case 2  ''######## warm
+	JMP        L__main264
+L__main267:
+;MyProject.mbas,892 :: 		case 2  ''######## warm
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__main417
+	BRNE       L__main379
 	CPI        R16, 2
-L__main417:
-	BREQ       L__main418
-	JMP        L__main291
-L__main418:
-;MyProject.mbas,969 :: 		Lcd_0()
+L__main379:
+	BREQ       L__main380
+	JMP        L__main270
+L__main380:
+;MyProject.mbas,893 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,970 :: 		loop22(K)
+;MyProject.mbas,894 :: 		loop22(K)
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _loop22+0
-	JMP        L__main285
-L__main291:
-;MyProject.mbas,971 :: 		case 3
+	JMP        L__main264
+L__main270:
+;MyProject.mbas,895 :: 		case 3
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__main419
+	BRNE       L__main381
 	CPI        R16, 3
-L__main419:
-	BREQ       L__main420
-	JMP        L__main294
-L__main420:
-;MyProject.mbas,972 :: 		Lcd_0()
+L__main381:
+	BREQ       L__main382
+	JMP        L__main273
+L__main382:
+;MyProject.mbas,896 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,973 :: 		loop33(K)
+;MyProject.mbas,897 :: 		loop33(K)
 	LDS        R2, _K+0
 	LDS        R3, _K+1
 	CALL       _loop33+0
-	JMP        L__main285
-L__main294:
-;MyProject.mbas,974 :: 		case 4
+	JMP        L__main264
+L__main273:
+;MyProject.mbas,898 :: 		case 4
 	LDS        R16, _mode+0
 	LDS        R17, _mode+1
 	CPI        R17, 0
-	BRNE       L__main421
+	BRNE       L__main383
 	CPI        R16, 4
-L__main421:
-	BREQ       L__main422
-	JMP        L__main297
-L__main422:
-;MyProject.mbas,975 :: 		Lcd_0()
+L__main383:
+	BREQ       L__main384
+	JMP        L__main276
+L__main384:
+;MyProject.mbas,899 :: 		Lcd_0()
 	CALL       _Lcd_0+0
-;MyProject.mbas,976 :: 		PROGRAM8(0,dl2)
+;MyProject.mbas,900 :: 		PROGRAM8(0,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	CLR        R2
 	CLR        R3
 	CALL       _PROGRAM8+0
-	JMP        L__main285
-L__main297:
-;MyProject.mbas,978 :: 		PROGRAM8(0,dl2)
+	JMP        L__main264
+L__main276:
+;MyProject.mbas,902 :: 		PROGRAM8(0,dl2)
 	LDS        R4, _dl2+0
 	LDS        R5, _dl2+1
 	CLR        R2
 	CLR        R3
 	CALL       _PROGRAM8+0
-L__main285:
-;MyProject.mbas,980 :: 		wend
-	JMP        L__main281
+L__main264:
+;MyProject.mbas,904 :: 		wend
+	JMP        L__main260
 L_end_main:
 	POP        R5
 	POP        R4

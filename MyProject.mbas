@@ -85,15 +85,16 @@ end sub
 end sub
 ' ######################################################################################################################################
 sub procedure Move_Delay()            ' Function used for text moving
+  mode=1
   select case mode
   case 1
-  Delay_ms(4)                       ' You can change the moving speed here
+  Delay_ms(200)                       ' You can change the moving speed here
   case 2
-  Delay_ms(30)                       ' You can change the moving speed here
+  Delay_ms(300)                       ' You can change the moving speed here
   case 3
-  Delay_ms(50)                       ' You can change the moving speed here
+  Delay_ms(500)                       ' You can change the moving speed here
   case 4
-  Delay_ms(1)                       ' You can change the moving speed here
+  Delay_ms(100)                       ' You can change the moving speed here
   end select
 end sub
 '#############################################################  PROGRAM1   ##########################################################################
@@ -187,44 +188,35 @@ end sub
 '     PWM_MAKE_as_max(jj,512) ii=output
 '     jj=floor((jj*255)/100)
           PWM2_Set_Duty(ii)
-'     case 4
-'     PWM_MAKE_as_max(jj,512) ii=output
-'     jj=floor((jj*255)/100)
-'          PWM2_Set_Duty(ii)
-'     case 5
-'     PWM_MAKE_as_max(jj,512) ii=output
-'     jj=floor((jj*255)/100)
-'          PWM16bit_Change_Duty(ii, _TIMER1_CH_A )
-'     case 6
-'     PWM_MAKE_as_max(jj,512) ii=output
-'     jj=floor((jj*255)/100)
-'          PWM16bit_Change_Duty(ii, _TIMER3_CH_B )
-'     case 7
-'     PWM_MAKE_as_max(jj,512) ii=output
-'     jj=floor((jj*255)/100)
-'          PWM16bit_Change_Duty(ii, _TIMER3_CH_C )
+'
      end select
  end sub
+ sub procedure SetPWM0(dim duty as integer)
+'   TCCR0|=(1<<WGM00)|(1<<WGM01)|(1<<COM01)|(1<<CS00)
+'   TCCR0 = (1<<FOC2)or (1<<COM21)or(1<<COM20) or(1<<WGM20) or (1<<CS00)
+   OCR2=duty
+end sub
 '#############################################################  PROGRAM1   ##########################################################################
 sub procedure PROGRAM1 (DIM J,dl AS integer)
 'const dl2
   Lcd_0()
 ' P=J
 ' for p=0 to 100      ' ???? 8 ????
+
   do
 
 '    delay_ms (dl)
 '    Delay_ms(2)
      Move_Delay()
-    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-     PWM2_Set_Duty(j)
+     PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+     PWM16bit_Change_Duty(0, _TIMER1_CH_B )
+     SetPWM0(-1)
      inc(J)
 
      lcd_out(1,1," _TIMER1_CH_A ")
      inttostr(j,txt)
-          lcd_out(2,5,txt)
-'    PWM2_Set_Duty(j)
+     lcd_out(2,5,txt)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -240,43 +232,38 @@ sub procedure PROGRAM2 (DIM J,dl AS integer)
  Lcd_0()
   do
 
-'    delay_ms (dl)
-     Move_Delay()
-'    Delay_ms(2)
-    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-     PWM2_Set_Duty(j)
+'   delay_ms (dl)
+    Move_Delay()
+'   Delay_ms(2)
+    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty(J, _TIMER1_CH_B )
+    SetPWM0(-1)
 
-     lcd_out(1,1," _TIMER1_CH_A ")
-     inttostr(j,txt)
-          lcd_out(2,5,txt)
-     Dec(J)
-'    PWM2_Set_Duty(j)
-'     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
-'     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
-'     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
-'   next p
-
-  loop until J>=0
+    lcd_out(1,1," _TIMER1_CH_B ")
+    inttostr(j,txt)
+    lcd_out(2,5,txt)
+    inc(J)
+  loop until J>=255
 end sub
 ' ######################################################################################################################################
 
 ' ######################################################    PROGRAM3    ################################################################################
 sub procedure PROGRAM3 (DIM J,dl AS integer)
 
-
-     PWM16bit_Change_Duty( j, _TIMER1_CH_A )
-     PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-'     PWM1_Set_Duty(j)      ''a channal
-     PWM2_Set_Duty(150)    ''b channal
+   do
+     PWM16bit_Change_Duty( 0, _TIMER1_CH_A )
+     PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+'    PWM1_Set_Duty(j)      ''a channal
+     SetPWM0(j)    ''b channal
      Lcd_0()
      lcd_out(1,1," _TIMER1_CH_A ")
      inttostr(j,txt)
-          lcd_out(2,5,txt)
-          lcd_out(1,1,"Pwm2 ")
+     lcd_out(2,5,txt)
+     lcd_out(1,1,"Pwm2 ")
      inttostr(150,txt)
-          lcd_out(2,5,txt )
-
+     lcd_out(2,5,txt )
+     inc(J)
+   loop until J>=255
 end sub
  ' ######################################################################################################################################
 '#############################################################  PROGRAM1   ##########################################################################
@@ -292,7 +279,7 @@ sub procedure PROGRAM4 (DIM J,dl AS integer)
 '    Delay_ms(2)
     PWM16bit_Change_Duty(j, _TIMER1_CH_A )
     PWM16bit_Change_Duty( p, _TIMER1_CH_B )
-     PWM2_Set_Duty(j)
+     SetPWM0(-1)
      lcd_out(1,1,"TIMER1_CH_A ")
      inttostr(j,txt)
           lcd_out(1,11,txt)
@@ -304,7 +291,7 @@ sub procedure PROGRAM4 (DIM J,dl AS integer)
           lcd_out(2,5,txt )
      inc(J)
     dec(p)
-'    PWM2_Set_Duty(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -326,8 +313,8 @@ sub procedure PROGRAM5 (DIM J,dl AS integer)
 '    Delay_ms(2)
     PWM16bit_Change_Duty(p, _TIMER1_CH_A )
     PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-     PWM2_Set_Duty(p)
-'    PWM2_Set_Duty(j)
+     SetPWM0(-1)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -346,13 +333,13 @@ sub procedure PROGRAM6 (DIM J,dl AS integer)
     Move_Delay()
 '    delay_ms (dl)
 '    Delay_ms(2)
-    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
+    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
     PWM16bit_Change_Duty( p, _TIMER1_CH_B )
-     PWM2_Set_Duty(j)
-     J=j+3 p=p-3
+    SetPWM0(j)
+    J=j+3 p=p-3
 '     inc(J)
 '     dec(p)
-'    PWM2_Set_Duty(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -374,15 +361,15 @@ end sub
 '    Delay_ms(2)
     PWM16bit_Change_Duty(p, _TIMER1_CH_A )
 '    PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
-     PWM2_Set_Duty(j)
+    PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
+     SetPWM0(j)
 '     delay_ms (dl)
      Move_Delay()
-     PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
+'     PWM16bit_Change_Duty(p*0, _TIMER1_CH_A )
      
-    PWM16bit_Change_Duty( p*0, _TIMER1_CH_B )
-     PWM2_Set_Duty(j*0)
-'    PWM2_Set_Duty(j)
+'    PWM16bit_Change_Duty( p*0, _TIMER1_CH_B )
+'     PWM2_Set_Duty(j*0)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -402,10 +389,10 @@ sub procedure PROGRAM8 (DIM J,dl AS integer)
     Move_Delay()
 '    delay_ms (dl)
 '    Delay_ms(2)
-    PWM16bit_Change_Duty(p, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-     PWM2_Set_Duty(0)
-'    PWM2_Set_Duty(j)
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
+    PWM16bit_Change_Duty(p, _TIMER1_CH_B )
+     SetPWM0(-1)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -426,10 +413,10 @@ sub procedure PROGRAM9 (DIM J,dl AS integer)
     Move_Delay()
 '    delay_ms (dl)
 '    Delay_ms(2)
-    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
     PWM16bit_Change_Duty( j, _TIMER1_CH_B )
-     PWM2_Set_Duty(p)
-'    PWM2_Set_Duty(j)
+    SetPWM0(-1)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -450,9 +437,9 @@ sub procedure PROGRAM10 (DIM J,dl AS integer)
 '    delay_ms (dl)
 '    Delay_ms(2)
     PWM16bit_Change_Duty(0, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
-     PWM2_Set_Duty(p)
-'    PWM2_Set_Duty(j)
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     SetPWM0(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -474,8 +461,8 @@ sub procedure PROGRAM11 (DIM J,dl AS integer)
 '    Delay_ms(2)
     PWM16bit_Change_Duty(j, _TIMER1_CH_A )
     PWM16bit_Change_Duty( 0, _TIMER1_CH_B )
-     PWM2_Set_Duty(p)
-'    PWM2_Set_Duty(j)
+     SetPWM0(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -496,11 +483,11 @@ sub procedure PROGRAM12 (DIM J,dl AS integer)
     Move_Delay()
 '    delay_ms (dl)
 '    Delay_ms(2)
-    PWM16bit_Change_Duty(j, _TIMER1_CH_A )
-    PWM16bit_Change_Duty( p, _TIMER1_CH_B )
-     PWM2_Set_Duty(1)
+    PWM16bit_Change_Duty(0, _TIMER1_CH_A )
+    PWM16bit_Change_Duty( j, _TIMER1_CH_B )
+     SetPWM0(j)
      J=j+1
-'    PWM2_Set_Duty(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -522,9 +509,9 @@ sub procedure PROGRAM13 (DIM J,dl AS integer)
 '    Delay_ms(2)
     PWM16bit_Change_Duty(30, _TIMER1_CH_A )
     PWM16bit_Change_Duty( 10, _TIMER1_CH_B )
-     PWM2_Set_Duty(100)
+     SetPWM0(100)
      J=j+3
-'    PWM2_Set_Duty(j)
+'    SetPWM0(j)
 '     PWM_MAKE (j,255,1)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,2)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
 '     PWM_MAKE (j,255,3)''(dim jj as integer,dim max_duty,Pwm_chanel as integer)
@@ -548,12 +535,13 @@ J=0
     'DDD5_bit = 1                      'Set PORTD pin 5 as output pin for the PWM1 (according to datasheet oc1b)
 
 '    PWM1_Init(_PWM1_FAST_MODE, _PWM1_PRESCALER_8, _PWM1_NON_INVERTED,J)
+    TCCR2 = (1<<FOC2)or (1<<COM21)or(1<<COM20) or(1<<WGM20) or (1<<CS00) ''Pwm0 or pwm1 in meicrobasic
     PWM2_Init(_PWM2_FAST_MODE, _PWM2_PRESCALER_8, _PWM2_NON_INVERTED, J)
     PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
 '    PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
 '    PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, j , _TIMER1)
 '    PWM1_Set_Duty(j)
-    PWM2_Set_Duty(j)
+    SetPWM0(j)
 '    PWM3_Set_Duty(j)   ' Se
 '    ocr0=0 ocr2=0
 '    for k=0 to 5
@@ -581,95 +569,31 @@ end sub
 ' ######################################################################################################################################
 
 sub procedure LOOP11 (DIM J AS integer)
-K=150
+     K=0
      kk=255 -k
-'     dl2=100
-'     const dl2=100
+'    dl2=100
+'    const dl2=100
      do
-'     PROGRAM1(k,dl2)
-     PROGRAM9(K,dl2)
-     PROGRAM2(kk,dl2)
-     PROGRAM4(k,dl2)
-     PROGRAM10(K,dl2)
-     PROGRAM5(k,dl2)
-     PROGRAM6(k,dl2)
-     PROGRAM7(K,dl2)
-     PROGRAM8(K,dl2)
-      PROGRAM11(K,dl2)
-'        PROGRAM12(K,dl2)
-        PROGRAM13(K,dl2)
-      K=K+3
-      kk=kk - 3
-'      inc(K)
-'      dec(kk)
-'
-'      LOOP1(k)
-       if mode<>1 then
-          break
-       end if
-
-      loop until K >= 255
-      K=170
-     kk=255-k
-      do
-'     PROGRAM1(k,dl2)
-     PROGRAM9(K,dl2)
-'     PROGRAM2(kk,dl2)
-     PROGRAM4(k,dl2)
-'     PROGRAM10(K,dl2)
-     PROGRAM5(k,dl2)
-'     PROGRAM6(k,dl2)
-     PROGRAM7(K,dl2)
-'     PROGRAM8(K,dl2)
-      PROGRAM11(K,dl2)
-      K=K+1
-      kk=kk - 1
-     if mode<>1 then
-          break
-       end if
-
-      loop until K >= 255
-      K=190
-     kk=255-k
-      do
-'     PROGRAM1(k,dl2)
-'     PROGRAM9(K,dl2)
-     PROGRAM2(kk,dl2)
-'     PROGRAM4(k,dl2)
-'     PROGRAM10(K,dl2)
-'     PROGRAM5(k,dl2)
-     PROGRAM6(k,dl2)
-'     PROGRAM7(K,dl2)
-'     PROGRAM8(K,dl2)
-      PROGRAM11(K,dl2)
-      K=K+10
-      kk=kk - 10
-      if mode<>1 then
-          break
-       end if
-
-      loop until K >= 255
-      K=180
-     kk=255-180
-      do
      PROGRAM1(k,dl2)
-'     PROGRAM9(K,dl2)
-     PROGRAM2(kk,dl2)
-'     PROGRAM4(k,dl2)
-     PROGRAM10(K,dl2)
-'     PROGRAM5(k,dl2)
+     PROGRAM2(k,dl2)
+     PROGRAM3(k,dl2)
+     PROGRAM4(k,dl2)
+     PROGRAM5(k,dl2)
      PROGRAM6(k,dl2)
-'     PROGRAM7(K,dl2)
+     PROGRAM7(K,dl2)
      PROGRAM8(K,dl2)
-      PROGRAM11(K,dl2)
-      K=K+1
-      kk=kk - 1
-     if mode<>1 then
-          break
-       end if
-      loop until K >= 255
+     PROGRAM9(K,dl2)
+     PROGRAM10(K,dl2)
+     PROGRAM11(K,dl2)
+     PROGRAM12(K,dl2)
+     PROGRAM13(K,dl2)
+     K=K+3
+     kk=kk - 3
 
-     end sub
+     loop until K >= 255
+
+
+end sub
 
 sub procedure loop22(dim k2 as integer)
 K=k2

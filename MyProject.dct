@@ -1403,6 +1403,7 @@ se
 se_bit
 seqmodebank0
 seqmodebank1
+setpwm0
 sfior
 shorttohex
 shorttostr
